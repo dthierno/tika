@@ -148,6 +148,130 @@ Le POM racine exclut uniquement `tache2/resultats/M0/**` du contrôle de licence
 Apache RAT, car ces preuves sont des fichiers générés conservés sans modification.
 Le contrôle reste actif sur le reste du projet.
 
+### Génération de tests avec ChatUniTest
+
+ChatUniTest 2.1.1 (`chatunitest-maven-plugin`) est déclaré dans le profil Maven
+`chatunitest` de `tika-core/pom.xml`. Le modèle est `qwen2.5-coder:3b` (famille
+qwen2, 3,1 milliards de paramètres, quantification Q4_K_M), exécuté en local par
+Ollama 0.40.3 sur `http://localhost:11434/v1/chat/completions`.
+
+Le plugin accepte seulement une liste fixe de noms de modèles. Nous utilisons donc
+l'alias Ollama `code-llama`, créé avec `ollama cp qwen2.5-coder:3b code-llama`.
+Les deux noms pointent vers le même fichier de poids
+(`sha256-4a188102020e…`). La configuration demande 3 tests par méthode
+(`testNumber`), 3 tours de réparation (`maxRounds`) et désactive le parallélisme
+(`thread=false`).
+
+Le profil sert uniquement à la génération. `chatunitest-starter` 1.5.0 ajoute
+`junit-platform-runner` 1.7.2 (JUnit 4) : avec `-Pchatunitest`, Surefire exécute
+0 test. Les tests s'exécutent donc sans ce profil. Ils ont seulement besoin de
+`mockito-core` et `mockito-junit-jupiter`, ajoutés en portée `test`.
+
+Commande de génération, depuis la racine du dépôt :
+
+```sh
+./mvnw -B -pl tika-core -Pchatunitest chatunitest:class \
+  -DselectClass=ZeroSizeFileDetector \
+  -Dcheckstyle.skip -Drat.skip -Dforbiddenapis.skip
+```
+
+Les options `-D...skip` empêchent les contrôles de bloquer la génération. Elles ne
+servent pas pour l'exécution des tests.
+
+#### Résultats bruts
+
+| Exécution | JDK | Tentatives | Tentatives qui compilent | Tests acceptés |
+|---|---|---:|---:|---:|
+| 1 | 21.0.12 | 9 | 0 | 0 |
+| 2 | 17.0.20 | 9 | 0 | 0 |
+
+Chaque exécution produit 3 tests, avec 3 tours chacun. **ChatUniTest n'a accepté
+aucun test sur les 18 tentatives** : toutes échouent à la compilation, sauf une
+réponse de l'exécution 2 dont le code n'a pas pu être extrait.
+
+Avec le JDK 21, `javac` ajoute des avertissements, car le processeur
+d'annotations de Tika déclare `RELEASE_17`. ChatUniTest les envoie au modèle avec
+les vraies erreurs. Nous avons relancé sous JDK 17 pour retirer ce bruit. La
+commande de l'exécution 2 contenait aussi `-DmaxRounds=5`, sans effet : la valeur
+du POM (3) l'emporte.
+
+Erreurs de compilation produites par le modèle :
+
+- imports manquants (`TemporaryResources`, `ByteArrayInputStream`) ;
+- appel du constructeur protégé de `TikaInputStream` au lieu de
+  `TikaInputStream.get(byte[])` ;
+- appel statique de la méthode d'instance `detect` ;
+- bibliothèque absente du projet (`org.reflections`) ;
+- `when(...).thenReturn(...)` sur `mark` et `reset`, qui retournent `void`.
+
+#### Corrections
+
+Nous retenons la tentative 0, tour 2, de l'exécution 2. Elle contient 7 tests.
+Les corrections sont les suivantes :
+
+1. Suppression de 12 lignes `when(tis.mark(1)).thenReturn(0)` et
+   `when(tis.reset()).thenReturn(null)`, 2 par test dans 6 tests. Erreur
+   corrigée : `'void' type not allowed here`.
+2. Spotless, lancé par le build de Tika en mode `apply`, ajoute l'en-tête de
+   licence Apache, trie les imports et retire 2 imports inutiles (`InputStream`,
+   `ZeroSizeFileDetector`).
+3. Checkstyle (`AvoidStarImport`) refuse 4 imports `.*`. Ils deviennent des
+   imports explicites, et `import org.mockito.*` est retiré car inutilisé.
+
+En dehors de la correction 1, le corps des tests ne change pas. Le résultat est
+`tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetector_detect_0_0_Test.java`.
+
+#### Critique des assertions
+
+- `testDetectWithNonNullInputStream` simule un flux vide (`read()` retourne -1),
+  attend `MediaType.EMPTY` et vérifie un appel à `mark(1)`, `read()` et `reset()`.
+  Avec les 5 tests suivants, 6 tests sur 7 vérifient `reset()`, l'appel supprimé
+  par le mutant survivant de M0.
+- `testDetectWithNullInputStream` passe `null` et attend `MediaType.OCTET_STREAM`.
+  Il couvre la branche `tis == null`, absente des tests originaux.
+- Les 5 autres tests ont le même corps : `read()` retourne 1, le résultat attendu
+  est `OCTET_STREAM` et les mêmes appels sont vérifiés. Ils sont redondants. Leurs
+  noms (`ReadLimit`, `Reset`, `CloseShield`, `OverrideLength`) annoncent des cas
+  qu'ils ne construisent pas.
+- Les oracles portent sur des appels de mocks, pas sur la position réelle du flux.
+  Les tests originaux utilisent au contraire un vrai `TikaInputStream.get(byte[])`.
+  Les mocks de `Metadata` et `ParseContext` ne servent à rien.
+
+La mesure M1 avec PIT reste à faire.
+
+#### Vérification
+
+Les 9 tests (2 originaux, 7 générés) passent sans profil ChatUniTest, avec le
+JDK 21.0.12, Checkstyle et Spotless en mode `check` :
+
+```sh
+./mvnw -B -ntp -pl tika-annotation-processor -am install -DskipTests -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core clean test -Dtest='ZeroSizeFileDetector*' \
+  -Dsurefire.failIfNoSpecifiedTests=false -Djacoco.append=false -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core de.thetaphi:forbiddenapis:testCheck
+./mvnw -B -ntp -N apache-rat:check
+```
+
+Résultat : `Tests run: 9, Failures: 0, Errors: 0`, 0 violation Checkstyle,
+0 erreur forbiddenapis, contrôle RAT réussi.
+
+#### Preuves conservées
+
+Les sorties de ChatUniTest sont copiées dans `tache2/resultats/generation/`, sans
+modification :
+
+- `run1-jdk21/` et `run2-jdk17/` : commande, journal Maven, code et erreurs de
+  compilation de chaque tentative (`error-message/`), prompts et réponses du
+  modèle (`history/`).
+- `corrections/` : le test brut (`1-brut`), puis après la correction 1
+  (`2-sans-stubs-void`), puis après Spotless (`3-apres-spotless`).
+- [Journal des 9 tests](tache2/resultats/generation/tests.log).
+- [Empreintes SHA-256](tache2/resultats/generation/SHA256SUMS).
+
+Ces fichiers ne contiennent aucun secret : la clé `ollama` est une valeur fictive
+exigée par le plugin. Le POM racine exclut aussi `tache2/resultats/generation/**`
+du contrôle RAT.
+
 ### Utilisation de l'IA
 
 Ce travail a été réalisé par **Thierno Diallo et Andy Luemba Nguema**, avec
@@ -169,9 +293,13 @@ vérification des résultats présentés dans ce document. ChatGPT a principalem
 servi d'outil d'accompagnement, de compréhension, d'organisation et d'aide à la
 rédaction.
 
-La mesure M0 a été validée avant la préparation du setup. Aucun test IA ou manuel
-supplémentaire n'a encore été ajouté. ChatUniTest sera préparé par Andy après la
-fusion du setup. Cette section documente uniquement le travail réalisé à ce stade,
+Pour la partie ChatUniTest, nous avons aussi utilisé Claude Code (Anthropic) pour
+installer l'environnement, lancer la génération, analyser les erreurs de
+compilation et rédiger la section correspondante. Les tests viennent de ChatUniTest
+et du modèle local `qwen2.5-coder:3b`. Les corrections sont listées plus haut.
+
+La mesure M0 a été validée avant la préparation du setup. Aucun test manuel n'a
+encore été ajouté. Cette section documente uniquement le travail réalisé à ce stade,
 conformément aux
 [consignes de la tâche 2](https://github.com/umontreal-diro/IFT3913/blob/2026/tache2/readme.md)
 et aux [instructions de déclaration de l'IA de l'Université de Montréal](https://boite-outils.bib.umontreal.ca/c.php?g=743753&p=5377614).

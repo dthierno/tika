@@ -1,0 +1,129 @@
+[INFO] Maveniverse Nisse 0.9.4 loaded
+[INFO] Nisse injecting 40 properties into User Properties
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] No need for inlining
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/jacoco/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/de/thetaphi/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/felix/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/sonatype/ossindex/maven/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/de/thetaphi/maven-metadata.xml (249 B at 864 B/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/jacoco/maven-metadata.xml (237 B at 822 B/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/felix/maven-metadata.xml (1.1 kB at 3.9 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/rat/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/io/github/zju-aces-ise/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/com/diffplug/spotless/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/sonatype/ossindex/maven/maven-metadata.xml (259 B at 883 B/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/tooling/maven-metadata.xml
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/rat/maven-metadata.xml (558 B at 16 kB/s)
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/tooling/maven-metadata.xml (240 B at 6.3 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-metadata.xml (10 kB at 380 kB/s)
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/mojo/maven-metadata.xml (20 kB at 751 kB/s)
+[INFO] 
+[INFO] ---------------------< org.apache.tika:tika-core >----------------------
+[INFO] Building Apache Tika core 4.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- chatunitest:2.1.1:class (default-cli) @ tika-core ---
+[INFO] 
+========================== Configuration ==========================
+
+[INFO] PluginSign >>>>CHATUNITEST
+[INFO]  Multithreading >>>> false
+[INFO]  Stop when success >>>> true
+[INFO]  No execution >>>> false
+[INFO]  Enable Merge >>>> true
+[INFO]  --- 
+[INFO]  TestOutput Path >>> /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-core/chatunitest-tests/tika-parent/tika-core
+[INFO]  TmpOutput Path >>> /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-core/target/chatunitest-info/tika-parent/tika-core
+[INFO]  CounterExample Path >>> /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-core/smartut-tests
+[INFO]  Prompt path >>> null
+[INFO]  Example path >>> /home/drew/.t3/projects/3913/.scratch/tache2-gen/tika/tika-core/exampleUsage.json
+[INFO]  --- 
+[INFO]  Model >>> CODE_LLAMA
+[INFO]  Url >>> http://localhost:11434/v1/chat/completions
+[INFO]  MaxPromptTokens >>> 10923
+[INFO]  MaxResponseTokens >>> 1024
+[INFO]  MinErrorTokens >>> 500
+[INFO]  MaxThreads >>> 40
+[INFO]  TestNumber >>> 3
+[INFO]  MaxRounds >>> 3
+[INFO]  MinErrorTokens >>> 500
+[INFO]  MaxPromptTokens >>> 10923
+[INFO]  SleepTime >>> 0
+[INFO]  DependencyDepth >>> 1
+[INFO]  SampleSize >>> 10
+[INFO]  PhaseType >>> CHATUNITEST
+[INFO] 
+===================================================================
+
+[INFO] 
+==========================
+[CHATUNITEST] Parsing class info ...
+[INFO] 
+Parsed classes: 361
+Parsed methods: 1617
+[INFO] 
+==========================
+[CHATUNITEST] Parse finished
+[INFO] 
+==========================
+[CHATUNITEST] Generating tests for class < ZeroSizeFileDetector > ...
+[INFO] 
+==========================
+[CHATUNITEST] Generating test for method < detect > number 0...
+
+[INFO] Generating test for method < detect > round 0 ...
+[INFO] Test for method < detect > compilation failed round 0
+[INFO] Fixing test for method < detect > round 1 ...
+[INFO] Test for method < detect > compilation failed round 1
+[INFO] Fixing test for method < detect > round 2 ...
+[INFO] Test for method < detect > compilation failed round 2
+[INFO] 
+==========================
+[CHATUNITEST] Generating test for method < detect > number 1...
+
+[INFO] Generating test for method < detect > round 0 ...
+[INFO] Test for method < detect > compilation failed round 0
+[INFO] Fixing test for method < detect > round 1 ...
+[INFO] Test for method < detect > extract code failed
+[INFO] Fixing test for method < detect > round 2 ...
+[INFO] Test for method < detect > compilation failed round 2
+[INFO] 
+==========================
+[CHATUNITEST] Generating test for method < detect > number 2...
+
+[INFO] Generating test for method < detect > round 0 ...
+[INFO] Test for method < detect > compilation failed round 0
+[INFO] Fixing test for method < detect > round 1 ...
+[INFO] Test for method < detect > compilation failed round 1
+[INFO] Fixing test for method < detect > round 2 ...
+[INFO] Test for method < detect > compilation failed round 2
+[INFO] 
+==========================
+[CHATUNITEST] Completed Method Jobs:   [ 1 /  0]
+[INFO] 
+==========================
+[CHATUNITEST] Generation finished
+[INFO] 
+==========================
+[CHATUNITEST] Test processed
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  05:56 min
+[INFO] Finished at: 2026-10-13T15:34:01-04:00
+[INFO] ------------------------------------------------------------------------

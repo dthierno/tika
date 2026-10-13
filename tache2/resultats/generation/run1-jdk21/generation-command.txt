@@ -1,0 +1,2 @@
+./mvnw -B -pl tika-core -Pchatunitest chatunitest:class -DselectClass=ZeroSizeFileDetector -Dcheckstyle.skip -Drat.skip -Dforbiddenapis.skip
+2026-10-13T15:20:15-04:00

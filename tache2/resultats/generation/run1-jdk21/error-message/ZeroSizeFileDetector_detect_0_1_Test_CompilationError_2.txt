@@ -1,0 +1,137 @@
+package org.apache.tika.detect;
+
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Properties;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.apache.tika.annotation.TikaComponentProcessor;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_1_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+    }
+
+    @Test
+    public void testDetectWithNullTikaInputStream() throws IOException {
+        MediaType result = detector.detect(null, new Metadata(), new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithEmptyTikaInputStream() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithNonEmptyTikaInputStream() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    public void testDetectWithMarkAndReset(boolean markSupported) throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        if (markSupported) {
+            tis.mark(1);
+            tis.reset();
+        }
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithIOException() throws IOException {
+        TikaInputStream tis = mock(TikaInputStream.class);
+        when(tis.read()).thenThrow(new IOException("Simulated I/O error"));
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidMetadata() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        Metadata metadata = null;
+        MediaType result = detector.detect(tis, metadata, new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidParseContext() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        ParseContext parseContext = null;
+        MediaType result = detector.detect(tis, new Metadata(), parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidInputSource() throws IOException {
+        TikaInputSource inputSource = new TikaInputSource(null);
+        TikaInputStream tis = new TikaInputStream(inputSource, mock(TemporaryResources.class), null);
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_1_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in ZeroSizeFileDetector_detect_0_1_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 42 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.ByteArrayInputStream,int
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 49 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.ByteArrayInputStream,int
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 57 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.ByteArrayInputStream,int
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 76 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.ByteArrayInputStream,int
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 84 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.ByteArrayInputStream,int
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 92 : cannot find symbol
+  symbol:   class TikaInputSource
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 92 : cannot find symbol
+  symbol:   class TikaInputSource
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 93 : cannot find symbol
+  symbol:   class TemporaryResources
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line -1 : Some messages have been simplified; recompile with -Xdiags:verbose to get full output

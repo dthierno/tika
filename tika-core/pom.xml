@@ -119,6 +119,18 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- Requis par les tests générés avec ChatUniTest (mocks) -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito-junit-jupiter.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -319,6 +331,42 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <!-- Génération seulement : le starter empêche Surefire de trouver les tests JUnit 6 -->
+    <profile>
+      <id>chatunitest</id>
+      <dependencies>
+        <dependency>
+          <groupId>io.github.ZJU-ACES-ISE</groupId>
+          <artifactId>chatunitest-starter</artifactId>
+          <version>1.5.0</version>
+          <type>pom</type>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>io.github.zju-aces-ise</groupId>
+            <artifactId>chatunitest-maven-plugin</artifactId>
+            <version>2.1.1</version>
+            <configuration>
+              <!-- Clé ignorée par Ollama, mais exigée par le plugin -->
+              <apiKeys>ollama</apiKeys>
+              <!-- Alias de qwen2.5-coder:3b, car le plugin n'accepte que certains noms -->
+              <model>code-llama</model>
+              <url>http://localhost:11434/v1/chat/completions</url>
+              <testNumber>3</testNumber>
+              <maxRounds>3</maxRounds>
+              <thread>false</thread>
+              <testOutput>${project.basedir}/chatunitest-tests</testOutput>
+              <tmpOutput>${project.build.directory}/chatunitest-info</tmpOutput>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <reporting>
     <plugins>
       <!-- to run: mvn site - reports go in target/site/findbugs.html -->

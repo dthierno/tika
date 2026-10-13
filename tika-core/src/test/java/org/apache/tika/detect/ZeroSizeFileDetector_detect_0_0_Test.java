@@ -1,0 +1,121 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.tika.detect;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_0_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    private TikaInputStream tis;
+
+    private Metadata metadata;
+
+    private ParseContext parseContext;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+        tis = mock(TikaInputStream.class);
+        metadata = mock(Metadata.class);
+        parseContext = mock(ParseContext.class);
+    }
+
+    @Test
+    public void testDetectWithNonNullInputStream() throws IOException {
+        when(tis.read()).thenReturn(-1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithNullInputStream() throws IOException {
+        MediaType result = detector.detect(null, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStream() throws IOException {
+        when(tis.read()).thenReturn(1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimit() throws IOException {
+        when(tis.read()).thenReturn(1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndReset() throws IOException {
+        when(tis.read()).thenReturn(1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield() throws IOException {
+        when(tis.read()).thenReturn(1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength() throws IOException {
+        when(tis.read()).thenReturn(1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+}

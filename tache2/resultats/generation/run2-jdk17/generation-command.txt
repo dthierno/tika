@@ -1,0 +1,3 @@
+JAVA_HOME=/home/drew/.t3/projects/3913/.scratch/tools/jdk17/jdk-17.0.20.1+1
+./mvnw -B -pl tika-core -Pchatunitest chatunitest:class -DselectClass=ZeroSizeFileDetector -DmaxRounds=5 -Dcheckstyle.skip -Drat.skip -Dforbiddenapis.skip
+2026-10-13T15:27:59-04:00
