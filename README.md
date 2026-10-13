@@ -392,10 +392,14 @@ Les dix tests passent localement, sans échec, erreur ou test ignoré. La suite
 entière de `tika-core` compte 757 cas, dont 755 exécutés et les deux cas déjà
 désactivés mentionnés plus haut. Le processeur d'annotations exécute huit tests.
 Il n'y a aucun échec ni erreur. Spotless, Checkstyle, les API interdites (sources
-et tests) et RAT passent. Le workflow et ses commandes sont vérifiés localement. Comme cette finalisation n'a pas encore
-été commitée ni poussée, ce nouveau workflow n'a pas encore exécuté ces dix tests
-sur GitHub ; sa validation distante reste à effectuer après publication. Les
-checks existants du dépôt sur `main` ne valident pas les modifications locales.
+et tests) et RAT passent.
+
+Le workflow a aussi été exécuté avec succès sur GitHub Actions sous Java 21.
+Les logs confirment trois tests dans `ZeroSizeFileDetectorTest` et sept dans la
+classe IA : `Tests run: 10, Failures: 0, Errors: 0, Skipped: 0`. Les contrôles
+d'API et de licence réussissent également. La
+[première exécution validée](https://github.com/dthierno/tika/actions/runs/38463501782)
+porte sur le commit `2252199a2`, qui contient les tests et la configuration finale.
 
 Lors du contrôle des checks de `6152ec4b2`, `no split packages` réussit et les
 builds Java sont encore en cours. Le workflow existant de publication Docker
@@ -403,6 +407,7 @@ builds Java sont encore en cours. Le workflow existant de publication Docker
 cette étape attend les secrets `DOCKERHUB_USER` et `DOCKERHUB_TOKEN` du dépôt.
 Ce workflow de publication n'est pas modifié pour le devoir. L'état distant et
 le lien vers l'échec sont enregistrés dans `tache2/resultats/M2/github-actions.json`.
+Ce fichier conserve l'état observé avant la publication du workflow du devoir.
 
 ### Utilisation de l'IA
 
@@ -436,9 +441,9 @@ workflow et compléter cette documentation, sous notre coordination. Le test man
 ne provient pas de ChatUniTest ; son intention, ses données et son oracle sont
 expliqués ci-dessus.
 
-M0 et M1 ont été validés ; M2 est mesuré localement. Cette section documente le
-travail réalisé et distingue les vérifications locales de la validation GitHub
-Actions encore à effectuer, conformément aux
+Les mesures M0, M1 et M2 ont été validées. Les dix tests ont également réussi sur
+GitHub Actions. Cette section documente le travail réalisé et les vérifications
+locales et distantes, conformément aux
 [consignes de la tâche 2](https://github.com/umontreal-diro/IFT3913/blob/2026/tache2/readme.md)
 et aux [instructions de déclaration de l'IA de l'Université de Montréal](https://boite-outils.bib.umontreal.ca/c.php?g=743753&p=5377614).
 
