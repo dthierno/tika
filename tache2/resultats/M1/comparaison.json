@@ -1,0 +1,86 @@
+{
+  "measured_at": "2026-10-13T16:01:43-04:00",
+  "source_branch": "origin/tache2/generation",
+  "source_commit": "ee7f0b7ad89a0b4120d15379a0b69b54ac13ed70",
+  "versions": {
+    "PIT": "1.30.0",
+    "pitest-junit5-plugin": "1.2.3",
+    "JUnit": "6.1.3",
+    "JaCoCo": "0.8.15",
+    "Java": "21.0.10",
+    "Maven": "3.9.12"
+  },
+  "target_class": "org.apache.tika.detect.ZeroSizeFileDetector",
+  "mutators": [
+    "DEFAULTS"
+  ],
+  "target_tests": [
+    "org.apache.tika.detect.ZeroSizeFileDetectorTest",
+    "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test"
+  ],
+  "test_results": [
+    {
+      "name": "org.apache.tika.detect.ZeroSizeFileDetectorTest",
+      "tests": "2",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    {
+      "name": "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  ],
+  "M0": {
+    "generated": 6,
+    "killed": 5,
+    "survived": 1,
+    "score_percent": 83.33333333333333
+  },
+  "M1": {
+    "generated": 6,
+    "killed": 6,
+    "survived": 0,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "run_error": 0,
+    "score_percent": 100
+  },
+  "gain_percentage_points": 16.666666666666668,
+  "same_mutation_identifiers_as_M0": true,
+  "additional_killed_mutant": {
+    "line": 40,
+    "description": "removed call to org/apache/tika/io/TikaInputStream::reset",
+    "mutator": "org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator",
+    "first_killing_test_in_standard_report": "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+    "all_killing_IA_tests_verified_with_full_matrix": [
+      "testDetectWithMarkedInputStream",
+      "testDetectWithMarkedInputStreamAndReadLimit",
+      "testDetectWithMarkedInputStreamAndReadLimitAndReset",
+      "testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield",
+      "testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength",
+      "testDetectWithNonNullInputStream"
+    ],
+    "original_tests_pass_against_this_mutant": true
+  },
+  "jacoco": {
+    "instructions_covered": 20,
+    "instructions_total": 20,
+    "branches_covered": 4,
+    "branches_total": 4,
+    "lines_covered": 7,
+    "lines_total": 7
+  },
+  "diagnostic_run": "fullMutationMatrix=true executes every covering test; versions, mutators and mutation identifiers are unchanged; it also gives 6/6 killed.",
+  "README_generation_correction_needed": "Six IA tests verify reset(), not only testDetectWithNonNullInputStream. README has not been edited for this measurement.",
+  "AI_assistance": "Codex prepared the isolated worktree, expanded PIT targetTests, executed the existing tests and PIT, and extracted results. No test or production source was created or modified.",
+  "input_sha256": {
+    "tika-core/pom.xml": "723e10d3d158bfd3b62a1fbdd3ba4c37b633463424685d12f66b112ab4721684",
+    "tika-core/src/main/java/org/apache/tika/detect/ZeroSizeFileDetector.java": "1eae8f83aa1382ce151437a2df6cbdb9b7f3f46f78f639489b8bc38a56ec51a3",
+    "tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java": "90d41f5f584a00e69f1bf6156eb2abd88e29ef13e00a15fe750b0daed368df76",
+    "tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetector_detect_0_0_Test.java": "d5ab321c3c44cbf9e6afd03a6ceca6100c384b345a040bebb3f51b711baca39a"
+  }
+}

@@ -1,0 +1,7 @@
+YAML, triggers, Java 21 and active checks: valid
+Commands (all executed locally):
+./mvnw -B -ntp -pl tika-annotation-processor -am install -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core clean test -Dtest='ZeroSizeFileDetector*' -Djacoco.append=false -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core de.thetaphi:forbiddenapis:check de.thetaphi:forbiddenapis:testCheck
+./mvnw -B -ntp -N apache-rat:check
+GitHub execution of this local workflow: pending publication; no commit or push performed.

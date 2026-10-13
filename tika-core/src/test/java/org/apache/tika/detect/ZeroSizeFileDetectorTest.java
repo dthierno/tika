@@ -17,6 +17,7 @@
 package org.apache.tika.detect;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -49,6 +50,17 @@ public class ZeroSizeFileDetectorTest {
     public void testDetectNonZeroValue() {
         byte[] data = "Testing 1...2...3".getBytes(UTF_8);
         detect(data, MediaType.OCTET_STREAM);
+    }
+
+    @Test
+    public void testDetectPreservesStreamPosition() throws IOException {
+        byte[] data = "ABC".getBytes(UTF_8);
+        try (TikaInputStream tis = TikaInputStream.get(data)) {
+            assertEquals(MediaType.OCTET_STREAM,
+                    detector.detect(tis, new Metadata(), new ParseContext()));
+            assertEquals(0L, tis.getPosition());
+            assertArrayEquals(data, tis.readAllBytes());
+        }
     }
 
     private void detect(byte[] data, MediaType type) {

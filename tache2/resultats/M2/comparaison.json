@@ -1,0 +1,209 @@
+{
+  "measured_at": "2026-10-13T16:25:04-04:00",
+  "branch": "tache2/mutation",
+  "base_commit": "6152ec4b24b25c08eb4326daa13f17a76f30f4f1",
+  "local_modifications_not_committed": true,
+  "versions": {
+    "PIT": "1.30.0",
+    "pitest-junit5-plugin": "1.2.3",
+    "JUnit": "6.1.3",
+    "JaCoCo": "0.8.15",
+    "Java": "21.0.10",
+    "Maven": "3.9.12"
+  },
+  "mutators": [
+    "DEFAULTS"
+  ],
+  "target_class": "org.apache.tika.detect.ZeroSizeFileDetector",
+  "target_tests": [
+    "org.apache.tika.detect.ZeroSizeFileDetectorTest",
+    "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test"
+  ],
+  "targeted_tests": {
+    "original": 2,
+    "IA": 7,
+    "manual": 1,
+    "total": 10,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "M0": {
+    "generated": 6,
+    "killed": 5,
+    "survived": 1,
+    "score_percent": 83.33333333333333
+  },
+  "M1": {
+    "generated": 6,
+    "killed": 6,
+    "survived": 0,
+    "score_percent": 100
+  },
+  "M2": {
+    "generated": 6,
+    "killed": 6,
+    "survived": 0,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "run_error": 0,
+    "score_percent": 100
+  },
+  "mutation_identifiers_identical_for_all_three_measurements": true,
+  "manual_test_kills_lines": [
+    35,
+    40,
+    43
+  ],
+  "jacoco_targeted": {
+    "instructions_covered": 20,
+    "instructions_total": 20,
+    "branches_covered": 4,
+    "branches_total": 4,
+    "lines_covered": 7,
+    "lines_total": 7
+  },
+  "regression_tests": {
+    "tika-core": {
+      "tests": 757,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 2
+    },
+    "tika-annotation-processor": {
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "controls": {
+    "Spotless": "passed, check mode",
+    "Checkstyle": "passed",
+    "forbiddenapis_main_and_test": "passed",
+    "RAT": "passed; existing generated-evidence exclusions extended only to M1 and M2",
+    "workflow_yaml_and_commands": "validated locally",
+    "new_workflow_execution_on_GitHub": "pending publication; no push authorized"
+  },
+  "matrix_diagnostic": "fullMutationMatrix=true runs every covering test; mutation operators and identities remain unchanged.",
+  "mutants": [
+    {
+      "line": 33,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator_EQUAL_ELSE",
+      "description": "removed conditional - replaced equality check with false",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimit()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNonNullInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield()]"
+      ],
+      "succeeding_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectPreservesStreamPosition()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectNonZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNullInputStream()]"
+      ]
+    },
+    {
+      "line": 36,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.RemoveConditionalMutator_EQUAL_ELSE",
+      "description": "removed conditional - replaced equality check with false",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNonNullInputStream()]"
+      ],
+      "succeeding_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectPreservesStreamPosition()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectNonZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimit()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield()]"
+      ]
+    },
+    {
+      "line": 35,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator",
+      "description": "removed call to org/apache/tika/io/TikaInputStream::mark",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectPreservesStreamPosition()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectNonZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimit()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNonNullInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield()]"
+      ],
+      "succeeding_tests": [
+        ""
+      ]
+    },
+    {
+      "line": 40,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator",
+      "description": "removed call to org/apache/tika/io/TikaInputStream::reset",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectPreservesStreamPosition()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimit()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNonNullInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield()]"
+      ],
+      "succeeding_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectNonZeroValue()]"
+      ]
+    },
+    {
+      "line": 37,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.returns.NullReturnValsMutator",
+      "description": "replaced return value with null for org/apache/tika/detect/ZeroSizeFileDetector::detect",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNonNullInputStream()]"
+      ],
+      "succeeding_tests": [
+        ""
+      ]
+    },
+    {
+      "line": 43,
+      "mutator": "org.pitest.mutationtest.engine.gregor.mutators.returns.NullReturnValsMutator",
+      "description": "replaced return value with null for org/apache/tika/detect/ZeroSizeFileDetector::detect",
+      "status": "KILLED",
+      "killing_tests": [
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectPreservesStreamPosition()]",
+        "org.apache.tika.detect.ZeroSizeFileDetectorTest.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetectorTest]/[method:testDetectNonZeroValue()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithNullInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndReset()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimit()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStream()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength()]",
+        "org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test.[engine:junit-jupiter]/[class:org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test]/[method:testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield()]"
+      ],
+      "succeeding_tests": [
+        ""
+      ]
+    }
+  ],
+  "input_sha256": {
+    "tika-core/pom.xml": "723e10d3d158bfd3b62a1fbdd3ba4c37b633463424685d12f66b112ab4721684",
+    "tika-core/src/main/java/org/apache/tika/detect/ZeroSizeFileDetector.java": "1eae8f83aa1382ce151437a2df6cbdb9b7f3f46f78f639489b8bc38a56ec51a3",
+    "tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java": "6169cf3f6cf9e372768c4e3051daa89d217b6d52bee736b022761e8b3e40fc45",
+    "tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetector_detect_0_0_Test.java": "d5ab321c3c44cbf9e6afd03a6ceca6100c384b345a040bebb3f51b711baca39a",
+    ".github/workflows/tache2.yml": "516dc83a81fec991026051720d6deb64c1d083a066daf3dafcb50d28e45f4c37"
+  },
+  "AI_assistance": "Codex preserved the local changes, updated the branch, copied M1 evidence, configured PIT, executed tests and mutation analysis, prepared workflow checks and documentation. The added manual test was drafted with Codex assistance; no additional ChatUniTest generation was performed."
+}
