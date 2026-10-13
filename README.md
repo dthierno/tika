@@ -225,8 +225,8 @@ En dehors de la correction 1, le corps des tests ne change pas. Le résultat est
 
 - `testDetectWithNonNullInputStream` simule un flux vide (`read()` retourne -1),
   attend `MediaType.EMPTY` et vérifie un appel à `mark(1)`, `read()` et `reset()`.
-  C'est le seul test qui vérifie `reset()`, l'appel supprimé par le mutant
-  survivant de M0.
+  Avec les 5 tests suivants, 6 tests sur 7 vérifient `reset()`, l'appel supprimé
+  par le mutant survivant de M0.
 - `testDetectWithNullInputStream` passe `null` et attend `MediaType.OCTET_STREAM`.
   Il couvre la branche `tis == null`, absente des tests originaux.
 - Les 5 autres tests ont le même corps : `read()` retourne 1, le résultat attendu
