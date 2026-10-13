@@ -1,0 +1,7 @@
+./mvnw -B -ntp -pl tika-annotation-processor -am install -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core clean test -Dtest='ZeroSizeFileDetector*' -Djacoco.append=false -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core org.pitest:pitest-maven:mutationCoverage "-DreportsDirectory=$PWD/tache2/resultats/M2/pit-reports"
+./mvnw -B -ntp -pl tika-core org.pitest:pitest-maven:mutationCoverage -DfullMutationMatrix=true "-DreportsDirectory=$PWD/tache2/resultats/M2/pit-matrix"
+./mvnw -B -ntp -pl tika-core -am clean test -Djacoco.append=false -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core de.thetaphi:forbiddenapis:check de.thetaphi:forbiddenapis:testCheck
+./mvnw -B -ntp -N apache-rat:check

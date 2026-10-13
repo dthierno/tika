@@ -1,0 +1,233 @@
+[INFO] Maveniverse Nisse 0.9.4 loaded
+[INFO] Nisse injecting 32 properties into User Properties
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /Users/thierno/Downloads/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /Users/thierno/Downloads/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] No need for inlining
+[INFO] 
+[INFO] ---------------------< org.apache.tika:tika-core >----------------------
+[INFO] Building Apache Tika core 4.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ tika-core ---
+[INFO] Deleting /Users/thierno/Downloads/tika/tika-core/target
+[INFO] 
+[INFO] --- flatten:1.8.0:clean (flatten.clean) @ tika-core ---
+[INFO] Deleting /Users/thierno/Downloads/tika/tika-core/.flattened-pom.xml
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-maven-version) @ tika-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-java-version) @ tika-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-maven) @ tika-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.DependencyConvergence passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (ban-bad-log4j-versions) @ tika-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (ban-xerces-and-xml-apis) @ tika-core ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.dependency.BannedDependencies passed
+[INFO] 
+[INFO] --- checkstyle:3.6.0:check (validate) @ tika-core ---
+[INFO] You have 0 Checkstyle violations.
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (default) @ tika-core ---
+[INFO] surefireArgLine set to -javaagent:/Users/thierno/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/Users/thierno/Downloads/tika/tika-core/target/jacoco.exec,append=false
+[INFO] 
+[INFO] --- spotless:3.9.0:check (default) @ tika-core ---
+[INFO] Index file does not exist. Fallback to an empty index
+[INFO] Spotless.Java is keeping 390 files clean - 0 needs changes to be clean, 390 were already clean, 0 were skipped because caching determined they were already clean
+[INFO] 
+[INFO] --- remote-resources:3.3.0:process (process-resource-bundles) @ tika-core ---
+[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.8
+[INFO] Copying 3 resources from 1 bundle.
+[INFO] Copying appended resource: META-INF/LICENSE
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ tika-core ---
+[INFO] Copying 5 resources from src/main/resources to target/classes
+[INFO] Copying 3 resources from target/maven-shared-archive-resources to target/classes
+[INFO] 
+[INFO] --- flatten:1.8.0:flatten (flatten) @ tika-core ---
+[INFO] Generating flattened POM of project org.apache.tika:tika-core:bundle:4.0.0-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ tika-core ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 324 source files with javac [debug deprecation release 17] to target/classes
+[INFO] Processing @TikaComponent: org.apache.tika.config.EmbeddedLimits -> embedded-limits (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/EmbeddedLimits.java:[71,8] Class org.apache.tika.config.EmbeddedLimits is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.config.OutputLimits -> output-limits (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/OutputLimits.java:[65,8] Class org.apache.tika.config.OutputLimits is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.config.TimeoutLimits -> timeout-limits (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/TimeoutLimits.java:[54,8] Class org.apache.tika.config.TimeoutLimits is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.detect.BOMDetector -> bom-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.BOMDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.DefaultDetector -> default-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.DefaultDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.EmptyDetector -> empty-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.EmptyDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.FileCommandDetector -> file-command-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.FileCommandDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.MagicDetector -> magic-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.detect.MagicDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.MetadataCharsetDetector -> metadata-charset-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.MetadataCharsetDetector
+[INFO] Processing @TikaComponent: org.apache.tika.detect.OverrideEncodingDetector -> override-encoding-detector (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.EncodingDetector for org.apache.tika.detect.OverrideEncodingDetector
+[INFO] Processing @TikaComponent: org.apache.tika.extractor.SkipEmbeddedDocumentSelector -> skip-embedded-document-selector (SPI: true, contextKey: org.apache.tika.extractor.DocumentSelector, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/extractor/SkipEmbeddedDocumentSelector.java:[30,8] Class org.apache.tika.extractor.SkipEmbeddedDocumentSelector is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.extractor.StandardExtractorFactory -> standard-extractor-factory (SPI: true, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/extractor/StandardExtractorFactory.java:[28,8] Class org.apache.tika.extractor.StandardExtractorFactory is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.io.SpoolingStrategy -> spooling-strategy (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/io/SpoolingStrategy.java:[47,8] Class org.apache.tika.io.SpoolingStrategy is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.language.translate.DefaultTranslator -> default-translator (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.language.translate.Translator for org.apache.tika.language.translate.DefaultTranslator
+[INFO] Processing @TikaComponent: org.apache.tika.language.translate.EmptyTranslator -> empty-translator (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.language.translate.Translator for org.apache.tika.language.translate.EmptyTranslator
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.CaptureGroupMetadataFilter -> capture-group-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.CaptureGroupMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.ClearByAttachmentTypeMetadataFilter -> clear-by-attachment-type-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.ClearByAttachmentTypeMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.DateNormalizingMetadataFilter -> date-normalizing-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.DateNormalizingMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.ExcludeFieldMetadataFilter -> exclude-field-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.ExcludeFieldMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.FieldNameMappingFilter -> field-name-mapping-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.FieldNameMappingFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.GeoPointMetadataFilter -> geo-point-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.GeoPointMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.IncludeFieldMetadataFilter -> include-field-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.IncludeFieldMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.LegacyKeyMigrationFilter -> legacy-key-migration-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.LegacyKeyMigrationFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.NoOpFilter -> no-op-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.NoOpFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.filter.RemoveByMimeMetadataFilter -> remove-by-mime-metadata-filter (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.metadata.filter.MetadataFilter for org.apache.tika.metadata.filter.RemoveByMimeMetadataFilter
+[INFO] Processing @TikaComponent: org.apache.tika.metadata.writefilter.StandardMetadataLimiterFactory -> standard-metadata-limiter-factory (SPI: true, contextKey: org.apache.tika.metadata.writefilter.MetadataWriteLimiterFactory, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/metadata/writefilter/StandardMetadataLimiterFactory.java:[50,8] Class org.apache.tika.metadata.writefilter.StandardMetadataLimiterFactory is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.mime.MimeTypes -> mime-types (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.detect.Detector for org.apache.tika.mime.MimeTypes
+[INFO] Processing @TikaComponent: org.apache.tika.parser.AutoDetectParserConfig -> auto-detect-parser-config (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/parser/AutoDetectParserConfig.java:[38,8] Class org.apache.tika.parser.AutoDetectParserConfig is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.parser.DefaultParser -> default-parser (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.DefaultParser
+[INFO] Processing @TikaComponent: org.apache.tika.parser.EmptyParser -> empty-parser (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.EmptyParser
+[INFO] Processing @TikaComponent: org.apache.tika.parser.ErrorParser -> error-parser (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.ErrorParser
+[INFO] Processing @TikaComponent: org.apache.tika.parser.RegexCaptureParser -> regex-capture-parser (SPI: false, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.RegexCaptureParser
+[INFO] Processing @TikaComponent: org.apache.tika.parser.SimplePasswordProvider -> simple-password-provider (SPI: true, contextKey: org.apache.tika.parser.PasswordProvider, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/parser/SimplePasswordProvider.java:[38,8] Class org.apache.tika.parser.SimplePasswordProvider is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.parser.external.ExternalParser -> external-parser (SPI: true, contextKey: null, defaultFor: null)
+[INFO] Auto-detected contextKey=org.apache.tika.parser.Parser for org.apache.tika.parser.external.ExternalParser
+[INFO] Processing @TikaComponent: org.apache.tika.sax.BasicContentHandlerFactory -> basic-content-handler-factory (SPI: true, contextKey: null, defaultFor: org.apache.tika.sax.ContentHandlerFactory)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/BasicContentHandlerFactory.java:[40,8] Class org.apache.tika.sax.BasicContentHandlerFactory is a parse-context component, adding to parse-context.idx
+[INFO] Processing @TikaComponent: org.apache.tika.sax.SAXOutputConfig -> sax-output-config (SPI: false, contextKey: null, defaultFor: null)
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/SAXOutputConfig.java:[31,8] Class org.apache.tika.sax.SAXOutputConfig is a parse-context component, adding to parse-context.idx
+[INFO] Generated SPI file: META-INF/services/org.apache.tika.language.translate.Translator with 2 implementations
+[INFO] Generated SPI file: META-INF/services/org.apache.tika.parser.Parser with 1 implementations
+[INFO] Generated SPI file: META-INF/services/org.apache.tika.metadata.filter.MetadataFilter with 10 implementations
+[INFO] Generated index file: META-INF/tika/encoding-detectors.idx with 3 components
+[INFO] Generated index file: META-INF/tika/translators.idx with 2 components
+[INFO] Generated index file: META-INF/tika/metadata-filters.idx with 10 components
+[INFO] Generated index file: META-INF/tika/parse-context.idx with 11 components
+[INFO] Generated index file: META-INF/tika/parsers.idx with 5 components
+[INFO] Generated index file: META-INF/tika/detectors.idx with 5 components
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/detect/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/exception/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/extractor/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/io/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/metadata/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/mime/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/parser/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/xpath/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/utils/package-info.java:[21,22] aQute.bnd.annotation.Version in aQute.bnd.annotation has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/detect/DefaultDetector.java:[122,37] org.apache.tika.detect.OverrideDetector in org.apache.tika.detect has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/mime/ProbabilisticMimeDetectionSelector.java:[164,36] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/sax/RecursiveParserWrapperHandler.java:[157,44] TIKA_CONTENT_HANDLER in org.apache.tika.metadata.TikaCoreProperties has been deprecated
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/ServiceLoader.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/thierno/Downloads/tika/tika-core/src/main/java/org/apache/tika/config/ServiceLoader.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ tika-core ---
+[INFO] Copying 57 resources from src/test/resources to target/test-classes
+[INFO] Copying 3 resources from target/maven-shared-archive-resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ tika-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 71 source files with javac [debug deprecation release 17] to target/test-classes
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/test/java/org/apache/tika/mime/MimeTypesReaderTest.java:[296,37] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/test/java/org/apache/tika/mime/MimeTypesReaderTest.java:[304,37] getMimeType(java.lang.String) in org.apache.tika.mime.MimeTypes has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/test/java/org/apache/tika/parser/ParserDecoratorTest.java:[117,28] withFallbacks(java.util.Collection<? extends org.apache.tika.parser.Parser>,java.util.Set<org.apache.tika.mime.MediaType>) in org.apache.tika.parser.ParserDecorator has been deprecated
+[WARNING] /Users/thierno/Downloads/tika/tika-core/src/test/java/org/apache/tika/utils/ServiceLoaderUtilsTest.java:[45,48] org.apache.tika.detect.OverrideDetector in org.apache.tika.detect has been deprecated
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ tika-core ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.apache.tika.detect.ZeroSizeFileDetectorTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.421 s -- in org.apache.tika.detect.ZeroSizeFileDetectorTest
+[INFO] Running org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/Users/thierno/.m2/repository/net/bytebuddy/byte-buddy-agent/1.17.7/byte-buddy-agent-1.17.7.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.922 s -- in org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ tika-core ---
+[INFO] Loading execution data file /Users/thierno/Downloads/tika/tika-core/target/jacoco.exec
+[INFO] Analyzed bundle 'Apache Tika core' with 345 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.668 s
+[INFO] Finished at: 2026-10-13T16:18:33-04:00
+[INFO] ------------------------------------------------------------------------

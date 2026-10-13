@@ -1,0 +1,42 @@
+diff --git a/tika-core/pom.xml b/tika-core/pom.xml
+index 99128f0bc..c3170d73d 100644
+--- a/tika-core/pom.xml
++++ b/tika-core/pom.xml
+@@ -301,6 +301,7 @@
+           </targetClasses>
+           <targetTests>
+             <param>org.apache.tika.detect.ZeroSizeFileDetectorTest</param>
++            <param>org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test</param>
+           </targetTests>
+           <mutators>
+             <mutator>DEFAULTS</mutator>
+diff --git a/tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java b/tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java
+index 14414855b..8fe3e0f8e 100644
+--- a/tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java
++++ b/tika-core/src/test/java/org/apache/tika/detect/ZeroSizeFileDetectorTest.java
+@@ -17,6 +17,7 @@
+ package org.apache.tika.detect;
+ 
+ import static java.nio.charset.StandardCharsets.UTF_8;
++import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+ import static org.junit.jupiter.api.Assertions.assertEquals;
+ import static org.junit.jupiter.api.Assertions.fail;
+ 
+@@ -51,6 +52,17 @@ public class ZeroSizeFileDetectorTest {
+         detect(data, MediaType.OCTET_STREAM);
+     }
+ 
++    @Test
++    public void testDetectPreservesStreamPosition() throws IOException {
++        byte[] data = "ABC".getBytes(UTF_8);
++        try (TikaInputStream tis = TikaInputStream.get(data)) {
++            assertEquals(MediaType.OCTET_STREAM,
++                    detector.detect(tis, new Metadata(), new ParseContext()));
++            assertEquals(0L, tis.getPosition());
++            assertArrayEquals(data, tis.readAllBytes());
++        }
++    }
++
+     private void detect(byte[] data, MediaType type) {
+         try {
+             TikaInputStream tis = TikaInputStream.get(data);

@@ -1,0 +1,53 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+name: IFT3913 - Tâche 2
+
+on:
+  push:
+    branches: [ main, 'tache2/**' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Prepare annotation processor
+        run: ./mvnw -B -ntp -pl tika-annotation-processor -am install -Dspotless.goal=check
+      - name: Run task 2 tests
+        run: >-
+          ./mvnw -B -ntp -pl tika-core clean test
+          -Dtest='ZeroSizeFileDetector*'
+          -Djacoco.append=false -Dspotless.goal=check
+      - name: Check forbidden APIs
+        run: ./mvnw -B -ntp -pl tika-core de.thetaphi:forbiddenapis:check de.thetaphi:forbiddenapis:testCheck
+      - name: Check licenses
+        run: ./mvnw -B -ntp -N apache-rat:check

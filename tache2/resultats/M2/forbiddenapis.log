@@ -1,0 +1,48 @@
+[INFO] Maveniverse Nisse 0.9.4 loaded
+[INFO] Nisse injecting 32 properties into User Properties
+[INFO] Scanning for projects...
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika-parent:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /Users/thierno/Downloads/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective model for org.apache.tika:tika:pom:4.0.0-SNAPSHOT
+[WARNING] 'version' contains an expression but should be a constant. @ org.apache.tika:tika-parent:${revision}, /Users/thierno/Downloads/tika/tika-parent/pom.xml, line 34, column 12
+[WARNING] 
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING] 
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING] 
+[INFO] No need for inlining
+[INFO] 
+[INFO] ---------------------< org.apache.tika:tika-core >----------------------
+[INFO] Building Apache Tika core 4.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] -------------------------------[ bundle ]-------------------------------
+[INFO] 
+[INFO] --- forbiddenapis:3.10:check (default-cli) @ tika-core ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-17
+[INFO] Reading bundled API signatures: jdk-deprecated-17
+[INFO] Reading bundled API signatures: jdk-non-portable
+[INFO] Reading bundled API signatures: jdk-internal-17
+[INFO] Reading bundled API signatures: commons-io-unsafe-2.11.0
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 394 class file(s) for forbidden API invocations (in 0.34s), 0 error(s).
+[INFO] 
+[INFO] --- forbiddenapis:3.10:testCheck (default-cli) @ tika-core ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-17
+[INFO] Reading bundled API signatures: jdk-deprecated-17
+[INFO] Reading bundled API signatures: jdk-non-portable
+[INFO] Reading bundled API signatures: jdk-internal-17
+[INFO] Reading bundled API signatures: commons-io-unsafe-2.11.0
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 92 class file(s) for forbidden API invocations (in 0.17s), 0 error(s).
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.669 s
+[INFO] Finished at: 2026-10-13T16:22:55-04:00
+[INFO] ------------------------------------------------------------------------

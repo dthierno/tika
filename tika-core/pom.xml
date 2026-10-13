@@ -301,6 +301,7 @@
           </targetClasses>
           <targetTests>
             <param>org.apache.tika.detect.ZeroSizeFileDetectorTest</param>
+            <param>org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test</param>
           </targetTests>
           <mutators>
             <mutator>DEFAULTS</mutator>

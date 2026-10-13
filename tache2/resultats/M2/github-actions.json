@@ -1,0 +1,56 @@
+{
+  "observed_at": "2026-10-13T20:25:41.589Z",
+  "commit": "6152ec4b24b25c08eb4326daa13f17a76f30f4f1",
+  "local_tache2_workflow": "not published; no remote execution yet",
+  "runs": [
+    {
+      "name": "main jdk17 windows build",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310741"
+    },
+    {
+      "name": "main jdk25 build",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310742"
+    },
+    {
+      "name": "main jdk21 build",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310775"
+    },
+    {
+      "name": "main jdk17 build",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310853"
+    },
+    {
+      "name": "main jdk17 windows build (multi-locale)",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310730"
+    },
+    {
+      "name": "no split packages",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310953"
+    },
+    {
+      "name": "Docker snapshot - tika-server and tika-grpc",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/dthierno/tika/actions/runs/38461310743"
+    }
+  ],
+  "docker_failure": {
+    "run_url": "https://github.com/dthierno/tika/actions/runs/38461310743",
+    "job_id": 115517099156,
+    "step": "Login to Docker Hub",
+    "message": "Username and password required",
+    "configuration": "Existing workflow references DOCKERHUB_USER and DOCKERHUB_TOKEN repository secrets; no credential or deployment configuration was changed."
+  }
+}

@@ -1,0 +1,3 @@
+./mvnw -B -ntp -pl tika-core -am clean test -Dtest=ZeroSizeFileDetectorTest,ZeroSizeFileDetector_detect_0_0_Test -Dsurefire.failIfNoSpecifiedTests=false -Djacoco.append=false -Dspotless.goal=check
+./mvnw -B -ntp -pl tika-core org.pitest:pitest-maven:mutationCoverage "-DreportsDirectory=$PWD/tache2/resultats/M1/pit-reports"
+./mvnw -B -ntp -pl tika-core org.pitest:pitest-maven:mutationCoverage -DfullMutationMatrix=true "-DreportsDirectory=$PWD/tache2/resultats/M1/pit-matrix"
