@@ -1,0 +1,126 @@
+package org.apache.tika.detect;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Blob;
+import java.sql.SQLException;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.TaggedInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.metadata.TikaCoreProperties;
+import org.apache.tika.utils.StringUtils;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_2_Test {
+
+    @InjectMocks
+    private ZeroSizeFileDetector zeroSizeFileDetector;
+
+    @Mock
+    private Metadata metadata;
+
+    @Mock
+    private ParseContext parseContext;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testDetectZeroSizeFile() throws IOException {
+        // Create a mock TikaInputStream for a zero-size file
+        InputStream zeroSizeInputStream = new ByteArrayInputStream(new byte[0]);
+        zeroSizeInputStream.mark(1);
+        zeroSizeInputStream.read();
+        zeroSizeInputStream.reset();
+        // Call the detect method
+        MediaType result = zeroSizeFileDetector.detect(zeroSizeInputStream, metadata, parseContext);
+        // Verify the result
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectNonZeroSizeFile() throws IOException {
+        // Create a mock TikaInputStream for a non-zero-size file
+        InputStream nonZeroSizeInputStream = new ByteArrayInputStream(new byte[1]);
+        nonZeroSizeInputStream.mark(1);
+        nonZeroSizeInputStream.read();
+        nonZeroSizeInputStream.reset();
+        // Call the detect method
+        MediaType result = zeroSizeFileDetector.detect(nonZeroSizeInputStream, metadata, parseContext);
+        // Verify the result
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectNullInputStream() throws IOException {
+        // Call the detect method with a null inputStream
+        MediaType result = zeroSizeFileDetector.detect(null, metadata, parseContext);
+        // Verify the result
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithCustomMetadata() throws IOException {
+        // Create a mock TikaInputStream for a zero-size file
+        InputStream zeroSizeInputStream = new ByteArrayInputStream(new byte[0]);
+        zeroSizeInputStream.mark(1);
+        zeroSizeInputStream.read();
+        zeroSizeInputStream.reset();
+        // Set a custom metadata value
+        metadata.set("customKey", "customValue");
+        // Call the detect method
+        MediaType result = zeroSizeFileDetector.detect(zeroSizeInputStream, metadata, parseContext);
+        // Verify the result
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithCustomParseContext() throws IOException {
+        // Create a mock TikaInputStream for a zero-size file
+        InputStream zeroSizeInputStream = new ByteArrayInputStream(new byte[0]);
+        zeroSizeInputStream.mark(1);
+        zeroSizeInputStream.read();
+        zeroSizeInputStream.reset();
+        // Set a custom parse context value
+        ParseContext customParseContext = mock(ParseContext.class);
+        when(customParseContext.get("customKey")).thenReturn("customValue");
+        // Call the detect method
+        MediaType result = zeroSizeFileDetector.detect(zeroSizeInputStream, metadata, customParseContext);
+        // Verify the result
+        assertEquals(MediaType.EMPTY, result);
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 56 : incompatible types: java.io.InputStream cannot be converted to org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 69 : incompatible types: java.io.InputStream cannot be converted to org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 92 : incompatible types: java.io.InputStream cannot be converted to org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 106 : no suitable method found for get(java.lang.String)
+    method org.apache.tika.parser.ParseContext.<T>get(java.lang.Class<T>) is not applicable
+      (cannot infer type-variable(s) T
+        (argument mismatch; java.lang.String cannot be converted to java.lang.Class<T>))
+    method org.apache.tika.parser.ParseContext.<T>get(java.lang.Class<T>,T) is not applicable
+      (cannot infer type-variable(s) T
+        (actual and formal argument lists differ in length))
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 108 : incompatible types: java.io.InputStream cannot be converted to org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_2_Test: line -1 : Some messages have been simplified; recompile with -Xdiags:verbose to get full output

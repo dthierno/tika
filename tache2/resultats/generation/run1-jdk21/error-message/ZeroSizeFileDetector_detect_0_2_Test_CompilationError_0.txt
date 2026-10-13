@@ -1,0 +1,121 @@
+package org.apache.tika.detect;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.apache.tika.mime.MediaType;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_2_Test {
+
+    @Mock
+    private ParseContext parseContext;
+
+    private ZeroSizeFileDetector detector;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        detector = new ZeroSizeFileDetector();
+    }
+
+    @Test
+    public void testDetectNormalOperation() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 1024);
+        Metadata metadata = new Metadata();
+        MediaType expectedMediaType = MediaType.OCTET_STREAM;
+        MediaType actualMediaType = detector.detect(tis, metadata, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectNullInputStream() throws IOException {
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = mock(ParseContext.class);
+        MediaType expectedMediaType = MediaType.OCTET_STREAM;
+        MediaType actualMediaType = detector.detect(null, metadata, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectZeroLengthInputStream() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = mock(ParseContext.class);
+        MediaType expectedMediaType = MediaType.EMPTY;
+        MediaType actualMediaType = detector.detect(tis, metadata, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectNullMetadata() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 1024);
+        ParseContext parseContext = mock(ParseContext.class);
+        MediaType expectedMediaType = MediaType.OCTET_STREAM;
+        MediaType actualMediaType = detector.detect(tis, null, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectNullParseContext() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 1024);
+        Metadata metadata = new Metadata();
+        MediaType expectedMediaType = MediaType.OCTET_STREAM;
+        MediaType actualMediaType = detector.detect(tis, metadata, null);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectEmptyInputStream() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = mock(ParseContext.class);
+        MediaType expectedMediaType = MediaType.EMPTY;
+        MediaType actualMediaType = detector.detect(tis, metadata, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    @Test
+    public void testDetectLargeInputStream() throws IOException {
+        TikaInputStream tis = createTikaInputStream("test.txt", 1024 * 1024);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = mock(ParseContext.class);
+        MediaType expectedMediaType = MediaType.OCTET_STREAM;
+        MediaType actualMediaType = detector.detect(tis, metadata, parseContext);
+        assertEquals(expectedMediaType, actualMediaType);
+    }
+
+    private TikaInputStream createTikaInputStream(String fileName, long length) throws IOException {
+        Path path = Paths.get(fileName);
+        try (InputStream inputStream = Files.newInputStream(path)) {
+            return new TikaInputStream(inputStream, length);
+        }
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_2_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in ZeroSizeFileDetector_detect_0_2_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in ZeroSizeFileDetector_detect_0_2_Test: line 103 : constructor TikaInputStream in class org.apache.tika.io.TikaInputStream cannot be applied to given types;
+  required: java.io.InputStream,long
+  found:    java.io.InputStream,long
+  reason: TikaInputStream(java.io.InputStream,long) has protected access in org.apache.tika.io.TikaInputStream
+Error in ZeroSizeFileDetector_detect_0_2_Test: line -1 : Some messages have been simplified; recompile with -Xdiags:verbose to get full output

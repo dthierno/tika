@@ -1,0 +1,133 @@
+package org.apache.tika.detect;
+
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.reflections.Reflections;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+public class ZeroSizeFileDetector_detect_0_1_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+    }
+
+    @Test
+    public void testDetectWithNonNullTikaInputStream() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithNullTikaInputStream() throws IOException {
+        TikaInputStream tis = null;
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithNullParseContext() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = null;
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithCustomParseContext() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        parseContext.setJsonConfig("key", new JsonConfig());
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithCustomWriteLimiter() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        MetadataWriteLimiter writeLimiter = new MetadataWriteLimiter() {
+
+            @Override
+            public void add(String field, String value, Map<String, String[]> data) {
+                // Custom implementation
+            }
+
+            @Override
+            public void set(String field, String value, Map<String, String[]> data) {
+                // Custom implementation
+            }
+        };
+        parseContext.setResolvedConfig("writeLimiter", writeLimiter);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithCustomWriteLimiterFactory() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        MetadataWriteLimiterFactory writeLimiterFactory = new MetadataWriteLimiterFactory() {
+
+            @Override
+            public MetadataWriteLimiter createWriteLimiter(ParseContext context) {
+                // Custom implementation
+                return ACCEPT_ALL;
+            }
+        };
+        parseContext.setResolvedConfig("writeLimiterFactory", writeLimiterFactory);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithCustomWriteLimiterFactoryAndCustomWriteLimiter() throws IOException {
+        TikaInputStream tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        Metadata metadata = new Metadata();
+        ParseContext parseContext = new ParseContext();
+        MetadataWriteLimiterFactory writeLimiterFactory = new MetadataWriteLimiterFactory() {
+
+            @Override
+            public MetadataWriteLimiter createWriteLimiter(ParseContext context) {
+                // Custom implementation
+                return new MetadataWriteLimiter() {
+
+                    @Override
+                    public void add(String field, String value, Map<String, String[]> data) {
+                        // Custom implementation
+                    }
+
+                    @Override
+                    public void set(String field, String value, Map<String, String[]> data) {
+                        // Custom implementation
+                    }
+                };
+            }
+        };
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 8 : package org.reflections does not exist

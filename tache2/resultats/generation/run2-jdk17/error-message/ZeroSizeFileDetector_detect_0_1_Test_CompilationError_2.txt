@@ -1,0 +1,57 @@
+package org.apache.tika.detect;
+
+import java.io.IOException;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.reflections.Reflections;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+public class ZeroSizeFileDetector_detect_0_1_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+    }
+
+    @Test
+    public void testDetectWithNonEmptyInputStream() throws IOException {
+        // Create a mock TikaInputStream
+        TikaInputStream tis = mock(TikaInputStream.class);
+        when(tis.read()).thenReturn(1);
+        // Test the detect method
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        // Assert the result
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithEmptyInputStream() throws IOException {
+        // Create a mock TikaInputStream that returns -1 on read
+        TikaInputStream tis = mock(TikaInputStream.class);
+        when(tis.read()).thenReturn(-1);
+        // Test the detect method
+        MediaType result = detector.detect(tis, new Metadata(), new ParseContext());
+        // Assert the result
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithNullInputStream() throws IOException {
+        // Test the detect method with null input
+        MediaType result = detector.detect(null, new Metadata(), new ParseContext());
+        // Assert the result
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 8 : package org.reflections does not exist

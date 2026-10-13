@@ -1,0 +1,60 @@
+package org.apache.tika.detect;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+public class ZeroSizeFileDetector_detect_0_0_Test {
+
+    @Test
+    public void testDetectWithNonEmptyStream() throws IOException {
+        // Create a TikaInputStream with a non-empty byte array
+        TikaInputStream tis = TikaInputStream.get(new ByteArrayInputStream("Hello, World!".getBytes()));
+        // Create a Metadata object
+        Metadata metadata = new Metadata();
+        // Create a ParseContext object
+        ParseContext parseContext = new ParseContext();
+        // Call the detect method
+        MediaType result = ZeroSizeFileDetector.detect(tis, metadata, parseContext);
+        // Assert the result
+        assertEquals(MediaType.TEXT_PLAIN, result);
+    }
+
+    @Test
+    public void testDetectWithEmptyStream() throws IOException {
+        // Create a TikaInputStream with an empty byte array
+        TikaInputStream tis = TikaInputStream.get(new ByteArrayInputStream(new byte[0]));
+        // Create a Metadata object
+        Metadata metadata = new Metadata();
+        // Create a ParseContext object
+        ParseContext parseContext = new ParseContext();
+        // Call the detect method
+        MediaType result = ZeroSizeFileDetector.detect(tis, metadata, parseContext);
+        // Assert the result
+        assertEquals(MediaType.EMPTY, result);
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_0_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in ZeroSizeFileDetector_detect_0_0_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 30 : non-static method detect(org.apache.tika.io.TikaInputStream,org.apache.tika.metadata.Metadata,org.apache.tika.parser.ParseContext) cannot be referenced from a static context
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 44 : non-static method detect(org.apache.tika.io.TikaInputStream,org.apache.tika.metadata.Metadata,org.apache.tika.parser.ParseContext) cannot be referenced from a static context

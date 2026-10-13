@@ -1,0 +1,140 @@
+package org.apache.tika.detect;
+
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.apache.tika.mime.MediaType;
+
+public class ZeroSizeFileDetector_detect_0_1_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    private TikaInputStream tis;
+
+    private Metadata metadata;
+
+    private ParseContext parseContext;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+        metadata = new Metadata();
+        parseContext = new ParseContext();
+    }
+
+    @Test
+    public void testDetectWithNullTikaInputStream() throws IOException {
+        MediaType result = detector.detect(null, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithEmptyTikaInputStream() throws IOException {
+        tis = new TikaInputStream(new ByteArrayInputStream(new byte[0]), 0);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+    }
+
+    @Test
+    public void testDetectWithNonEmptyTikaInputStream() throws IOException {
+        tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = { true, false })
+    public void testDetectWithMarkAndReset(boolean markSupported) throws IOException {
+        tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        if (markSupported) {
+            tis.mark(1);
+            tis.reset();
+        }
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithIOException() throws IOException {
+        tis = mock(TikaInputStream.class);
+        when(tis.read()).thenThrow(new IOException("Simulated I/O error"));
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidInputSource() throws IOException {
+        TikaInputSource inputSource = new TikaInputSource(null);
+        tis = new TikaInputStream(inputSource, mock(TemporaryResources.class), null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidMetadata() throws IOException {
+        tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        metadata = null;
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithInvalidParseContext() throws IOException {
+        tis = new TikaInputStream(new ByteArrayInputStream(new byte[1]), 1);
+        parseContext = null;
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_1_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in ZeroSizeFileDetector_detect_0_1_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 51 : cannot find symbol
+  symbol:   class ByteArrayInputStream
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 58 : cannot find symbol
+  symbol:   class ByteArrayInputStream
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 66 : cannot find symbol
+  symbol:   class ByteArrayInputStream
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 85 : cannot find symbol
+  symbol:   class TikaInputSource
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 85 : cannot find symbol
+  symbol:   class TikaInputSource
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 86 : cannot find symbol
+  symbol:   class TemporaryResources
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 93 : cannot find symbol
+  symbol:   class ByteArrayInputStream
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test
+Error in ZeroSizeFileDetector_detect_0_1_Test: line 101 : cannot find symbol
+  symbol:   class ByteArrayInputStream
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_1_Test

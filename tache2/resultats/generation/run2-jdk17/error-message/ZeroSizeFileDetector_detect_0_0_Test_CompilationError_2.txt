@@ -1,0 +1,127 @@
+package org.apache.tika.detect;
+
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import java.io.IOException;
+import java.io.InputStream;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_0_Test {
+
+    private ZeroSizeFileDetector detector;
+
+    private TikaInputStream tis;
+
+    private Metadata metadata;
+
+    private ParseContext parseContext;
+
+    @BeforeEach
+    public void setUp() {
+        detector = new ZeroSizeFileDetector();
+        tis = mock(TikaInputStream.class);
+        metadata = mock(Metadata.class);
+        parseContext = mock(ParseContext.class);
+    }
+
+    @Test
+    public void testDetectWithNonNullInputStream() throws IOException {
+        when(tis.read()).thenReturn(-1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.EMPTY, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithNullInputStream() throws IOException {
+        MediaType result = detector.detect(null, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStream() throws IOException {
+        when(tis.read()).thenReturn(1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimit() throws IOException {
+        when(tis.read()).thenReturn(1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndReset() throws IOException {
+        when(tis.read()).thenReturn(1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShield() throws IOException {
+        when(tis.read()).thenReturn(1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+
+    @Test
+    public void testDetectWithMarkedInputStreamAndReadLimitAndResetAndCloseShieldAndOverrideLength() throws IOException {
+        when(tis.read()).thenReturn(1);
+        when(tis.mark(1)).thenReturn(0);
+        when(tis.reset()).thenReturn(null);
+        MediaType result = detector.detect(tis, metadata, parseContext);
+        assertEquals(MediaType.OCTET_STREAM, result);
+        verify(tis, times(1)).mark(1);
+        verify(tis, times(1)).read();
+        verify(tis, times(1)).reset();
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 39 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 40 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 57 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 58 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 69 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 70 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 81 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 82 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 93 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 94 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 105 : 'void' type not allowed here
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 106 : 'void' type not allowed here

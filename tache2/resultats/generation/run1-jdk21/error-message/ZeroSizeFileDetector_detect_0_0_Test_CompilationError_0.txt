@@ -1,0 +1,130 @@
+package org.apache.tika.detect;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Properties;
+import org.apache.tika.detect.ZeroSizeFileDetector;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.ParseContext;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.*;
+import org.junit.jupiter.api.*;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+@ExtendWith(MockitoExtension.class)
+public class ZeroSizeFileDetector_detect_0_0_Test {
+
+    @Mock
+    private TikaInputStream tisMock;
+
+    @Mock
+    private Metadata metadataMock;
+
+    @Mock
+    private ParseContext parseContextMock;
+
+    @Mock
+    private TemporaryResources tmpMock;
+
+    @Mock
+    private Properties propertiesMock;
+
+    @Mock
+    private InputStream inputStreamMock;
+
+    @Mock
+    private Reader readerMock;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    public void testDetectWithNonEmptyStream() throws IOException {
+        when(tisMock.read()).thenReturn(1);
+        when(tisMock.reset()).thenReturn();
+        when(tisMock.getPosition()).thenReturn(0);
+        when(tisMock.mark(1)).thenReturn();
+        when(tisMock.getOpenContainer()).thenReturn(null);
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+        when(tisMock.setCloseShield()).thenReturn();
+        when(tisMock.setLength(1)).thenReturn();
+        when(tisMock.setOpenContainer(null)).thenReturn();
+    }
+}
+
+--------------------------------------------
+Error in ZeroSizeFileDetector_detect_0_0_Test: line -1 : Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+Error in ZeroSizeFileDetector_detect_0_0_Test: line -1 : Supported source version 'RELEASE_17' from annotation processor 'org.apache.tika.annotation.TikaComponentProcessor' less than -source '21'
+Error in ZeroSizeFileDetector_detect_0_0_Test: line 33 : cannot find symbol
+  symbol:   class TemporaryResources
+  location: class org.apache.tika.detect.ZeroSizeFileDetector_detect_0_0_Test
