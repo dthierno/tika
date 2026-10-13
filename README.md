@@ -86,7 +86,7 @@ le test manuel : elle ne reproduit donc pas M0 ou M1 en lançant simplement PIT.
 |---|---|---:|
 | M0 | Setup `1d3155870`, avant les tests IA et le test manuel | 2 |
 | M1 | Génération `ee7f0b7ad`, avec le patch PIT archivé dans M1 | 9 |
-| M2 | `6152ec4b2` avec le test manuel et la sélection PIT des deux classes | 10 |
+| M2 | Version finale `dbb86f3`, avec le test manuel et la sélection PIT des deux classes | 10 |
 
 Pour retrouver M0 et M1 sans modifier la branche finale, créer des worktrees
 isolés depuis la racine du dépôt :
