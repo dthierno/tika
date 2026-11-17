@@ -34,6 +34,7 @@ import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
+import org.apache.tika.utils.StringUtils;
 
 /**
  * Decrypts the incoming document stream and delegates further parsing to
@@ -73,7 +74,14 @@ public abstract class CryptoParser extends DelegatingParser {
                       ParseContext context) throws IOException, SAXException, TikaException {
         try {
             Cipher cipher;
-            if (provider != null) {
+            if (StringUtils.isBlank(transformation)) {
+                // IFT3913 tache 3 - vulnerabilite V7 (CWE-327): sans transformation explicite,
+                // on se rabat sur AES en mode ECB. ECB chiffre chaque bloc independamment,
+                // sans vecteur d'initialisation ni integrite : des blocs identiques donnent
+                // des chiffres identiques, ce qui laisse fuiter la structure du document et
+                // permet de reordonner ou rejouer des blocs sans detection.
+                cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            } else if (provider != null) {
                 cipher = Cipher.getInstance(transformation, provider);
             } else {
                 cipher = Cipher.getInstance(transformation);

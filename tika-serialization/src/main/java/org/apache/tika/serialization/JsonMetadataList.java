@@ -17,6 +17,8 @@
 package org.apache.tika.serialization;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.List;
@@ -131,6 +133,32 @@ public class JsonMetadataList {
             return null;
         }
         return OBJECT_MAPPER.readValue(reader, new TypeReference<List<Metadata>>(){});
+    }
+
+    /**
+     * Reads a metadata list from a legacy cache written with Java serialization
+     * ({@link Metadata} implements {@link java.io.Serializable}). This does not close the stream.
+     * <p>
+     * IFT3913 tache 3 - vulnerabilite V6 (CWE-502): {@link ObjectInputStream#readObject()}
+     * instancie n'importe quelle classe serialisable presente dans le classpath avant meme
+     * le transtypage. Un flux forge (chaine de gadgets de type ysoserial) peut ainsi executer
+     * du code arbitraire ou epuiser la memoire lors de la deserialisation.
+     *
+     * @param stream stream containing a serialized {@code List<Metadata>}
+     * @return Metadata list or null if stream is null
+     * @throws IOException in case of IO failure or unknown class
+     */
+    @SuppressWarnings("unchecked")
+    public static List<Metadata> fromJavaSerialized(InputStream stream) throws IOException {
+        if (stream == null) {
+            return null;
+        }
+        ObjectInputStream ois = new ObjectInputStream(stream);
+        try {
+            return (List<Metadata>) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            throw new IOException("Unable to read serialized metadata list", e);
+        }
     }
 
     public static void setPrettyPrinting(boolean prettyPrint) {

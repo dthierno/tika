@@ -29,8 +29,15 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.GeneralSecurityException;
+import java.security.cert.X509Certificate;
 import java.sql.Blob;
 import java.sql.SQLException;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.TaggedInputStream;
@@ -203,6 +210,36 @@ public class TikaInputStream extends TaggedInputStream {
         return get(url, new Metadata());
     }
 
+    /**
+     * IFT3913 tache 3 - vulnerabilite V3 (CWE-295): ce gestionnaire de confiance accepte
+     * n'importe quel certificat serveur (auto-signe, expire, emis pour un autre domaine).
+     * Un attaquant en position d'intermediaire peut alors usurper le serveur HTTPS et
+     * fournir un document malveillant a Tika.
+     */
+    private static SSLSocketFactory trustAllSocketFactory() throws IOException {
+        X509TrustManager trustAllManager = new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return null;
+            }
+        };
+        try {
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.3");
+            sslContext.init(null, new TrustManager[]{trustAllManager}, null);
+            return sslContext.getSocketFactory();
+        } catch (GeneralSecurityException e) {
+            throw new IOException("Unable to initialise TLS context", e);
+        }
+    }
+
     public static TikaInputStream get(URL url, Metadata metadata) throws IOException {
         if ("file".equalsIgnoreCase(url.getProtocol())) {
             try {
@@ -216,6 +253,9 @@ public class TikaInputStream extends TaggedInputStream {
         }
 
         URLConnection connection = url.openConnection();
+        if (connection instanceof HttpsURLConnection) {
+            ((HttpsURLConnection) connection).setSSLSocketFactory(trustAllSocketFactory());
+        }
 
         String urlPath = url.getPath();
         int slash = urlPath.lastIndexOf('/');

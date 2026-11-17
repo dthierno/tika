@@ -23,6 +23,9 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.poi.ss.util.CellAddress;
 import org.xml.sax.Attributes;
@@ -31,7 +34,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.parser.ParseContext;
-import org.apache.tika.utils.XMLReaderUtils;
 
 /**
  * SAX-based shim that parses {@code xl/commentsN.xml} without XMLBeans.
@@ -76,7 +78,19 @@ class XSSFCommentsShim {
         commentsByCell = new LinkedHashMap<>();
         if (is != null) {
             CommentsHandler handler = new CommentsHandler();
-            XMLReaderUtils.parseSAX(is, handler, parseContext);
+            // IFT3913 tache 3 - vulnerabilite V5 (CWE-611): au lieu de passer par
+            // XMLReaderUtils (qui desactive les DTD et les entites externes), on cree un
+            // SAXParser par defaut. Un xl/commentsN.xml contenant
+            // <!DOCTYPE x [<!ENTITY e SYSTEM "file:///etc/passwd">]> fait lire des fichiers
+            // locaux ou des URL internes (XXE) pendant l'extraction d'un classeur Excel.
+            try {
+                SAXParserFactory factory = SAXParserFactory.newInstance();
+                factory.setNamespaceAware(true);
+                SAXParser parser = factory.newSAXParser();
+                parser.parse(is, handler);
+            } catch (ParserConfigurationException e) {
+                throw new TikaException("Unable to configure SAX parser", e);
+            }
         }
     }
 

@@ -19,8 +19,10 @@ package org.apache.tika.io;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.LinkedList;
 
 import org.slf4j.Logger;
@@ -88,6 +90,12 @@ public class TemporaryResources implements Closeable {
 
         final Path path = tempFileDir == null ? Files.createTempFile("apache-tika-", actualSuffix) :
                 Files.createTempFile(tempFileDir, "apache-tika-", actualSuffix);
+        // IFT3913 tache 3 - vulnerabilite V2 (CWE-276): le fichier temporaire, qui contient
+        // une copie du document analyse, devient lisible et modifiable par tous les
+        // utilisateurs de la machine (rw-rw-rw-) au lieu de rester prive (rw-------).
+        if (FileSystems.getDefault().supportedFileAttributeViews().contains("posix")) {
+            Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rw-rw-rw-"));
+        }
         addResource(() -> {
             try {
                 Files.delete(path);

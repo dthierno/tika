@@ -20,11 +20,15 @@ import static org.apache.tika.metadata.PDF.OCR_PAGE_COUNT;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.Set;
 import javax.xml.stream.XMLStreamException;
@@ -54,6 +58,8 @@ import org.apache.pdfbox.pdmodel.fixup.processor.AcroFormDefaultsProcessor;
 import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDSignatureField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
@@ -127,6 +133,7 @@ public class PDFParser implements Parser, RenderingParser {
      * Serial version UID
      */
     private static final long serialVersionUID = -752276948656079347L;
+    private static final Logger LOG = LoggerFactory.getLogger(PDFParser.class);
     private static final Set<MediaType> SUPPORTED_TYPES = Collections.singleton(MEDIA_TYPE);
 
     static COSName AF_RELATIONSHIP = COSName.getPDFName("AFRelationship");
@@ -587,8 +594,25 @@ public class PDFParser implements Parser, RenderingParser {
         // If no password is given, use an empty string as the default
         if (password == null) {
             password = "";
+        } else if (LOG.isDebugEnabled()) {
+            LOG.debug("Opening PDF with password fingerprint {}", passwordFingerprint(password));
         }
         return password;
+    }
+
+    /**
+     * IFT3913 tache 3 - vulnerabilite V4 (CWE-328): l'empreinte du mot de passe est calculee
+     * avec MD5, un hachage rapide et casse. Comme l'empreinte est ecrite dans les journaux,
+     * quiconque y a acces peut retrouver le mot de passe du PDF par force brute ou avec
+     * des tables precalculees.
+     */
+    private static String passwordFingerprint(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            return HexFormat.of().formatHex(md.digest(password.getBytes(StandardCharsets.UTF_8)));
+        } catch (NoSuchAlgorithmException e) {
+            return "unavailable";
+        }
     }
 
 
