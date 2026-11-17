@@ -557,8 +557,6 @@ M=tika-parsers/tika-parsers-standard/tika-parsers-standard-modules
 
 ## 7. Utilisation de l'intelligence artificielle
 
-<!-- À RELIRE ET ADAPTER PAR L'ÉQUIPE avant la remise. -->
-
 Conformément aux consignes de l'Université de Montréal, nous déclarons avoir utilisé un outil d'IA
 générative : **Claude Code** (Anthropic, modèle Claude Opus 5.5), en novembre 2026. Il nous a aidés à :
 
