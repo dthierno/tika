@@ -171,32 +171,36 @@ Seul Semgrep fait échouer le commit qui les introduit.
 
 ### 2.4 Validation sur GitHub
 
-Les commits ont été poussés **un par un**, dans l'ordre prévu pour que chaque exécution corresponde
-à un seul commit :
+Les commits de la tâche 3 ont été poussés un par un sur `main` :
 
-| Commit | Auteur | Contenu | Résultat attendu (job `semgrep` / job `tests`) |
-|---|---|---|---|
-| `a0168aafa` | Thierno Diallo | workflow, action rickroll, test de démonstration | ✅ / ✅ |
-| `c6a8bef8d` | Andy Luemba Nguema | 7 vulnérabilités | ❌ 9 nouveaux constats / ✅ |
-| (ce commit) | Thierno Diallo | documentation, rapports Semgrep, exclusions RAT | ✅ / ✅ |
+| Commit | Auteur | Contenu |
+|---|---|---|
+| `a0168aafa` | Thierno Diallo | workflow, action rickroll, test de démonstration |
+| `c6a8bef8d` | Andy Luemba Nguema | 7 vulnérabilités |
+| `d17aa93a9` | Thierno Diallo | documentation, rapports Semgrep, exclusions RAT |
 
-**Limite rencontrée :** au moment des pushes (17 novembre 2026), GitHub n'a déclenché **aucune**
-exécution sur notre fork, ni pour notre workflow ni pour les workflows d'origine de Tika
-(`main jdk17 build`, etc.), alors qu'ils s'exécutaient normalement en octobre pour la tâche 2. Le
-déclenchement manuel (`gh workflow run tache3.yml`) est refusé avec
-`HTTP 422: Actions has been disabled for this repository`, bien que les paramètres du dépôt
-indiquent `enabled: true`. Il s'agit donc d'une restriction imposée par GitHub sur le dépôt, que nous
-ne pouvons pas lever nous-mêmes.
+**Incident :** au moment de ces pushes, GitHub avait suspendu les workflows de notre fork
+(*« Workflows are not currently being run on this fork due to the scale of GitHub Actions usage »*) :
+chaque push lançait aussi les sept workflows d'origine de Tika (builds Linux, Windows et Docker de
+30 à 45 minutes). Après réactivation, nous avons **désactivé ces sept workflows** (sans rapport avec la
+tâche et déjà en échec avant nos modifications) et rejoué chaque étape. Pour qu'une exécution porte
+sur exactement un commit, deux branches pointent sur les commits ci-dessus : leur premier push
+compare le commit à son parent (`HEAD~1`), comme un push du commit seul sur `main`.
 
-La validation du workflow repose donc sur la validation statique (2.1), sur la simulation locale de
-la barrière avec exactement les commandes du workflow (2.2), sur l'exécution locale des scripts des
-étapes avec des variables d'environnement GitHub simulées (2.2) et sur l'exécution des tests (2.3).
-Pour rejouer la démonstration sur GitHub dès qu'Actions est disponible :
+| Scénario | Commit testé | Référence Semgrep | Job `semgrep` | Job `tests` | Exécution |
+|---|---|---|---|---|---|
+| ajout du workflow (branche `tache3/demo-ci`) | `a0168aafa` | `48bf35599` | ✅ 0 constat | ✅ | [#44171407677](https://github.com/dthierno/tika/actions/runs/44171407677) |
+| ajout des 7 vulnérabilités (branche `tache3/demo-vulns`) | `c6a8bef8d` | `a0168aafa` | ❌ **9 constats bloquants** (« Ran 88 rules on 7 files: 9 findings ») | ✅ | [#44171407828](https://github.com/dthierno/tika/actions/runs/44171407828) |
+| exécution manuelle sur `main` avec `rickroll_demo = true` | `d17aa93a9` | `c6a8bef8d` | ✅ 0 constat | ❌ `RickrollDemoTest` + étape « Never gonna let you down » | [#44171346568](https://github.com/dthierno/tika/actions/runs/44171346568) |
 
-1. pousser une branche `tache3/demo-vulns` pointant sur `c6a8bef8d` : le job `semgrep` échoue avec
-   9 nouveaux constats (référence `HEAD~1` = `a0168aafa`) ;
-2. lancer « IFT3913 - Tâche 3 » à la main sur `main` avec `rickroll_demo` coché : le job `tests`
-   échoue sur `RickrollDemoTest` et l'étape « Never gonna let you down » produit le rickroll.
+Ces trois exécutions confirment sur GitHub les résultats de la simulation locale (2.2) :
+
+- un commit sans faille passe ;
+- le commit qui introduit les 7 vulnérabilités fait échouer le workflow, avec exactement les 9
+  constats attendus, alors que les tests restent verts ;
+- un commit de documentation pousse par-dessus des failles déjà présentes sans être bloqué ;
+- un test en échec déclenche le rickroll : les annotations et le résumé du job sont visibles sur
+  la page de l'exécution.
 
 ---
 
