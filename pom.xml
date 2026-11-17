@@ -313,6 +313,9 @@ least three +1 Tika PMC votes are cast.
             <inputExclude>tache2/resultats/M2/**</inputExclude>
             <!-- Sorties brutes de ChatUniTest, conservées comme preuves -->
             <inputExclude>tache2/resultats/generation/**</inputExclude>
+            <!-- IFT3913 tâche 3 : documentation et rapports Semgrep (JSON sans syntaxe de commentaire) -->
+            <inputExclude>tache3/README.md</inputExclude>
+            <inputExclude>tache3/resultats/**</inputExclude>
             <!-- remove this once we figure out the bundle packaging -->
             <inputExclude>tika-bundle/src/main/resources/META-INF/MANIFEST.MF</inputExclude>
             <inputExclude>.gitattributes</inputExclude>

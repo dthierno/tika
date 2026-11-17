@@ -1,0 +1,632 @@
+{
+  "version": "1.185.0",
+  "results": [
+    {
+      "check_id": "python.lang.security.audit.dynamic-urllib-use-detected.dynamic-urllib-use-detected",
+      "path": ".skills/update-site-for-release/scripts/extract-tika-contribs.py",
+      "start": {
+        "line": 94,
+        "col": 10,
+        "offset": 4227
+      },
+      "end": {
+        "line": 94,
+        "col": 49,
+        "offset": 4266
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-939: Improper Authorization in Handler for Custom URL Scheme"
+      ],
+      "message": "Detected a dynamic value being used with urllib. urllib supports 'file://' schemes, so a dynamic value controlled by a malicious actor may allow them to read arbitrary files. Audit uses of urllib calls to ensure user data cannot control the URLs, or consider using the 'requests' library instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "generic.html-templates.security.var-in-href.var-in-href",
+      "path": "docs/supplemental-ui/partials/header-content.hbs",
+      "start": {
+        "line": 4,
+        "col": 30,
+        "offset": 125
+      },
+      "end": {
+        "line": 4,
+        "col": 74,
+        "offset": 169
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      ],
+      "message": "Detected a template variable used in an anchor tag with the 'href' attribute. This allows a malicious actor to input the 'javascript:' URI and is subject to cross- site scripting (XSS) attacks. If using Flask, use 'url_for()' to safely generate a URL. If using Django, use the 'url' filter to safely generate a URL. If using Mustache, use a URL encoding library, or prepend a slash '/' to the variable for relative links (`href=\"/{{link}}\"`). You may also consider setting the Content Security Policy (CSP) header.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var",
+      "path": "docs/supplemental-ui/partials/header-content.hbs",
+      "start": {
+        "line": 10,
+        "col": 108,
+        "offset": 606
+      },
+      "end": {
+        "line": 10,
+        "col": 125,
+        "offset": 623
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      ],
+      "message": "Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around the template expression, like this: \"{{ expr }}\".",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "generic.html-templates.security.unquoted-attribute-var.unquoted-attribute-var",
+      "path": "docs/supplemental-ui/partials/header-content.hbs",
+      "start": {
+        "line": 10,
+        "col": 135,
+        "offset": 633
+      },
+      "end": {
+        "line": 10,
+        "col": 142,
+        "offset": 640
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+      ],
+      "message": "Detected a unquoted template variable as an attribute. If unquoted, a malicious actor could inject custom JavaScript handlers. To fix this, add quotes around the template expression, like this: \"{{ expr }}\".",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.overly-permissive-file-permission.overly-permissive-file-permission",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TemporaryResources.java",
+      "start": {
+        "line": 97,
+        "col": 13,
+        "offset": 3814
+      },
+      "end": {
+        "line": 97,
+        "col": 95,
+        "offset": 3896
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-276: Incorrect Default Permissions"
+      ],
+      "message": "Detected file permissions that are overly permissive (read, write, and execute). It is generally a bad practices to set overly permissive file permission such as read+write+exec for all users. If the file affected is a configuration, a binary, a script or sensitive data, it can lead to privilege escalation or information leakage. Instead, follow the principle of least privilege and give users only the  permissions they need.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 221,
+        "col": 13,
+        "offset": 8527
+      },
+      "end": {
+        "line": 223,
+        "col": 14,
+        "offset": 8637
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 225,
+        "col": 13,
+        "offset": 8651
+      },
+      "end": {
+        "line": 227,
+        "col": 14,
+        "offset": 8761
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 229,
+        "col": 13,
+        "offset": 8775
+      },
+      "end": {
+        "line": 232,
+        "col": 14,
+        "offset": 8887
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.xxe.saxparserfactory-disallow-doctype-decl-missing.saxparserfactory-disallow-doctype-decl-missing",
+      "path": "tika-core/src/main/java/org/apache/tika/mime/MimeTypesReader.java",
+      "start": {
+        "line": 223,
+        "col": 13,
+        "offset": 7927
+      },
+      "end": {
+        "line": 223,
+        "col": 42,
+        "offset": 7956
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "DOCTYPE declarations are enabled for this SAXParserFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature `http://apache.org/xml/features/disallow-doctype-decl` to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features `http://xml.org/sax/features/external-general-entities` and `http://xml.org/sax/features/external-parameter-entities` to false. NOTE - The previous links are not meant to be clicked. They are the literal config key values that are supposed to be used to disable these features. For more information, see https://semgrep.dev/docs/cheat-sheets/java-xxe/#3a-documentbuilderfactory.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-aes-ecb.use-of-aes-ecb",
+      "path": "tika-core/src/main/java/org/apache/tika/parser/CryptoParser.java",
+      "start": {
+        "line": 83,
+        "col": 26,
+        "offset": 3201
+      },
+      "end": {
+        "line": 83,
+        "col": 68,
+        "offset": 3243
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+      ],
+      "message": "Use of AES with ECB mode detected. ECB doesn't provide message confidentiality and  is not semantically secure so should not be used. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.unencrypted-socket.unencrypted-socket",
+      "path": "tika-core/src/main/java/org/apache/tika/parser/NetworkParser.java",
+      "start": {
+        "line": 68,
+        "col": 34,
+        "offset": 2405
+      },
+      "end": {
+        "line": 68,
+        "col": 74,
+        "offset": 2445
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-319: Cleartext Transmission of Sensitive Information"
+      ],
+      "message": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.xmlinputfactory-possible-xxe.xmlinputfactory-possible-xxe",
+      "path": "tika-core/src/main/java/org/apache/tika/utils/XMLReaderUtils.java",
+      "start": {
+        "line": 307,
+        "col": 35,
+        "offset": 12721
+      },
+      "end": {
+        "line": 307,
+        "col": 63,
+        "offset": 12749
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "XML external entities are not explicitly disabled for this XMLInputFactory. This could be vulnerable to XML external entity vulnerabilities. Explicitly disable external entities by setting \"javax.xml.stream.isSupportingExternalEntities\" to false.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.formatted-sql-string.formatted-sql-string",
+      "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/H2Util.java",
+      "start": {
+        "line": 70,
+        "col": 27,
+        "offset": 2304
+      },
+      "end": {
+        "line": 70,
+        "col": 42,
+        "offset": 2319
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+      ],
+      "message": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.formatted-sql-string.formatted-sql-string",
+      "path": "tika-eval/tika-eval-app/src/main/java/org/apache/tika/eval/app/db/JDBCUtil.java",
+      "start": {
+        "line": 184,
+        "col": 24,
+        "offset": 7084
+      },
+      "end": {
+        "line": 184,
+        "col": 39,
+        "offset": 7099
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+      ],
+      "message": "Detected a formatted string in a SQL statement. This could lead to SQL injection if variables in the SQL statement are not properly sanitized. Use a prepared statements (java.sql.PreparedStatement) instead. You can obtain a PreparedStatement using 'connection.prepareStatement'.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "python.lang.security.use-defused-xml.use-defused-xml",
+      "path": "tika-ml/tika-ml-chardetect/scripts/extract_wiki_sentences.py",
+      "start": {
+        "line": 15,
+        "col": 1,
+        "offset": 342
+      },
+      "end": {
+        "line": 15,
+        "col": 35,
+        "offset": 376
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "The Python documentation recommends using `defusedxml` instead of `xml` because the native Python `xml` library is vulnerable to XML External Entity (XXE) attacks. These attacks can leak confidential data and \"XML bombs\" can cause denial of service.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "python.lang.security.use-defused-xml.use-defused-xml",
+      "path": "tika-ml/tika-ml-chardetect/scripts/extract_zhwiki_traditional.py",
+      "start": {
+        "line": 20,
+        "col": 1,
+        "offset": 572
+      },
+      "end": {
+        "line": 20,
+        "col": 35,
+        "offset": 606
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "The Python documentation recommends using `defusedxml` instead of `xml` because the native Python `xml` library is vulnerable to XML External Entity (XXE) attacks. These attacks can leak confidential data and \"XML bombs\" can cause denial of service.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.xxe.saxparserfactory-disallow-doctype-decl-missing.saxparserfactory-disallow-doctype-decl-missing",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/ooxml/XSSFCommentsShim.java",
+      "start": {
+        "line": 89,
+        "col": 17,
+        "offset": 3285
+      },
+      "end": {
+        "line": 89,
+        "col": 59,
+        "offset": 3327
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "DOCTYPE declarations are enabled for this SAXParserFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature `http://apache.org/xml/features/disallow-doctype-decl` to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features `http://xml.org/sax/features/external-general-entities` and `http://xml.org/sax/features/external-parameter-entities` to false. NOTE - The previous links are not meant to be clicked. They are the literal config key values that are supposed to be used to disable these features. For more information, see https://semgrep.dev/docs/cheat-sheets/java-xxe/#3a-documentbuilderfactory.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-aes-ecb.use-of-aes-ecb",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-miscoffice-module/src/main/java/org/apache/tika/parser/hwp/HwpTextExtractorV5.java",
+      "start": {
+        "line": 346,
+        "col": 18,
+        "offset": 12490
+      },
+      "end": {
+        "line": 346,
+        "col": 57,
+        "offset": 12529
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+      ],
+      "message": "Use of AES with ECB mode detected. ECB doesn't provide message confidentiality and  is not semantically secure so should not be used. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.command-injection-formatted-runtime-call.command-injection-formatted-runtime-call",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module/src/main/java/org/apache/tika/parser/ocr/TesseractOCRParser.java",
+      "start": {
+        "line": 736,
+        "col": 23,
+        "offset": 31648
+      },
+      "end": {
+        "line": 736,
+        "col": 93,
+        "offset": 31718
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+      ],
+      "message": "A formatted or concatenated string was detected as input to a java.lang.Runtime call. This is dangerous if a variable is controlled by user input and could result in a command injection. Ensure your variables are not controlled by users or sufficiently sanitized.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-md5.use-of-md5",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module/src/main/java/org/apache/tika/parser/pdf/PDFParser.java",
+      "start": {
+        "line": 611,
+        "col": 58,
+        "offset": 26756
+      },
+      "end": {
+        "line": 611,
+        "col": 63,
+        "offset": 26761
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-328: Use of Weak Hash"
+      ],
+      "message": "Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is therefore not suitable as a cryptographic signature. Use HMAC instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.xxe.documentbuilderfactory-disallow-doctype-decl-missing.documentbuilderfactory-disallow-doctype-decl-missing",
+      "path": "tika-pipes/tika-async-cli/src/main/java/org/apache/tika/async/cli/TikaConfigAsyncWriter.java",
+      "start": {
+        "line": 78,
+        "col": 13,
+        "offset": 3018
+      },
+      "end": {
+        "line": 78,
+        "col": 63,
+        "offset": 3068
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "DOCTYPE declarations are enabled for this DocumentBuilderFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature \"http://apache.org/xml/features/disallow-doctype-decl\" to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features \"http://xml.org/sax/features/external-general-entities\" and \"http://xml.org/sax/features/external-parameter-entities\" to false.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-hostname-verifier.insecure-hostname-verifier",
+      "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+      "start": {
+        "line": 61,
+        "col": 1,
+        "offset": 2504
+      },
+      "end": {
+        "line": 61,
+        "col": 53,
+        "offset": 2556
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Insecure HostnameVerifier implementation detected. This will accept any SSL certificate with any hostname, which creates the possibility for man-in-the-middle attacks.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-sha1.use-of-sha1",
+      "path": "tika-pipes/tika-httpclient-commons/src/main/java/org/apache/tika/client/HttpClientFactory.java",
+      "start": {
+        "line": 466,
+        "col": 17,
+        "offset": 17890
+      },
+      "end": {
+        "line": 466,
+        "col": 72,
+        "offset": 17945
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-328: Use of Weak Hash"
+      ],
+      "message": "Detected SHA1 hash algorithm which is considered insecure. SHA1 is not collision resistant and is therefore not suitable as a cryptographic signature. Instead, use PBKDF2 for password hashing or SHA256 or SHA512 for other hash function applications.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.unencrypted-socket.unencrypted-socket",
+      "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/PerClientServerManager.java",
+      "start": {
+        "line": 291,
+        "col": 24,
+        "offset": 12542
+      },
+      "end": {
+        "line": 291,
+        "col": 42,
+        "offset": 12560
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-319: Cleartext Transmission of Sensitive Information"
+      ],
+      "message": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.unencrypted-socket.unencrypted-socket",
+      "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/SharedServerManager.java",
+      "start": {
+        "line": 219,
+        "col": 25,
+        "offset": 8088
+      },
+      "end": {
+        "line": 219,
+        "col": 37,
+        "offset": 8100
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-319: Cleartext Transmission of Sensitive Information"
+      ],
+      "message": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.unencrypted-socket.unencrypted-socket",
+      "path": "tika-pipes/tika-pipes-core/src/main/java/org/apache/tika/pipes/core/server/PipesServer.java",
+      "start": {
+        "line": 135,
+        "col": 29,
+        "offset": 5981
+      },
+      "end": {
+        "line": 135,
+        "col": 41,
+        "offset": 5993
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-319: Cleartext Transmission of Sensitive Information"
+      ],
+      "message": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.bad-hexa-conversion.bad-hexa-conversion",
+      "path": "tika-pipes/tika-pipes-plugins/tika-pipes-atlassian-jwt/src/main/java/org/apache/tika/pipes/fetcher/atlassianjwt/AtlassianJwtGenerator.java",
+      "start": {
+        "line": 86,
+        "col": 5,
+        "offset": 3236
+      },
+      "end": {
+        "line": 105,
+        "col": 6,
+        "offset": 4002
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-704: Incorrect Type Conversion or Cast"
+      ],
+      "message": "'Integer.toHexString()' strips leading zeroes from each byte if read byte-by-byte. This mistake weakens the hash value computed since it introduces more collisions. Use 'String.format(\"%02X\", ...)' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.object-deserialization.object-deserialization",
+      "path": "tika-serialization/src/main/java/org/apache/tika/serialization/JsonMetadataList.java",
+      "start": {
+        "line": 156,
+        "col": 9,
+        "offset": 6193
+      },
+      "end": {
+        "line": 156,
+        "col": 63,
+        "offset": 6247
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-502: Deserialization of Untrusted Data"
+      ],
+      "message": "Found object deserialization using ObjectInputStream. Deserializing entire Java objects is dangerous because malicious actors can create Java object streams with unintended consequences. Ensure that the objects being deserialized are not user-controlled. If this must be done, consider using HMACs to sign the data stream to make sure it is not tampered with, or consider only transmitting object fields and populating a new object.",
+      "lines": "requires login"
+    }
+  ],
+  "errors": [
+    {
+      "code": 3,
+      "level": "warn",
+      "type": [
+        "PartialParsing",
+        [
+          {
+            "path": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java",
+            "start": {
+              "line": 226,
+              "col": 47,
+              "offset": 0
+            },
+            "end": {
+              "line": 227,
+              "col": 23,
+              "offset": 58
+            }
+          },
+          {
+            "path": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java",
+            "start": {
+              "line": 606,
+              "col": 1,
+              "offset": 0
+            },
+            "end": {
+              "line": 606,
+              "col": 2,
+              "offset": 1
+            }
+          }
+        ]
+      ],
+      "message": "Syntax error at line tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java:226:\n `'\u0000' || Character.isISOControl(c)) {\n                return` was unexpected",
+      "path": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java",
+      "spans": [
+        {
+          "file": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java",
+          "start": {
+            "line": 226,
+            "col": 47,
+            "offset": 0
+          },
+          "end": {
+            "line": 227,
+            "col": 23,
+            "offset": 58
+          }
+        },
+        {
+          "file": "tika-server/tika-server-core/src/main/java/org/apache/tika/server/core/resource/PipesParsingHelper.java",
+          "start": {
+            "line": 606,
+            "col": 1,
+            "offset": 0
+          },
+          "end": {
+            "line": 606,
+            "col": 2,
+            "offset": 1
+          }
+        }
+      ]
+    }
+  ]
+}

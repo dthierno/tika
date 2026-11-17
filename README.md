@@ -12,6 +12,11 @@ Tika is a project of the [Apache Software Foundation](https://www.apache.org).
 
 Apache Tika, Tika, Apache, the Apache feather logo, and the Apache Tika project logo are trademarks of The Apache Software Foundation.
 
+## IFT3913 – Tâche 3
+
+La documentation de la tâche 3 (Semgrep dans le CI, vulnérabilités introduites, rickroll) est dans
+[`tache3/README.md`](tache3/README.md).
+
 ## IFT3913 – Tâche 2
 
 Nous retenons `org.apache.tika.detect.ZeroSizeFileDetector`, dans le module

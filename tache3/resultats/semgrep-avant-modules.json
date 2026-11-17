@@ -1,0 +1,66 @@
+{
+  "version": "1.185.0",
+  "results": [
+    {
+      "check_id": "java.lang.security.audit.xxe.saxparserfactory-disallow-doctype-decl-missing.saxparserfactory-disallow-doctype-decl-missing",
+      "path": "tika-core/src/main/java/org/apache/tika/mime/MimeTypesReader.java",
+      "start": {
+        "line": 223,
+        "col": 13,
+        "offset": 7927
+      },
+      "end": {
+        "line": 223,
+        "col": 42,
+        "offset": 7956
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "DOCTYPE declarations are enabled for this SAXParserFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature `http://apache.org/xml/features/disallow-doctype-decl` to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features `http://xml.org/sax/features/external-general-entities` and `http://xml.org/sax/features/external-parameter-entities` to false. NOTE - The previous links are not meant to be clicked. They are the literal config key values that are supposed to be used to disable these features. For more information, see https://semgrep.dev/docs/cheat-sheets/java-xxe/#3a-documentbuilderfactory.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.unencrypted-socket.unencrypted-socket",
+      "path": "tika-core/src/main/java/org/apache/tika/parser/NetworkParser.java",
+      "start": {
+        "line": 68,
+        "col": 34,
+        "offset": 2405
+      },
+      "end": {
+        "line": 68,
+        "col": 74,
+        "offset": 2445
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-319: Cleartext Transmission of Sensitive Information"
+      ],
+      "message": "Detected use of a Java socket that is not encrypted. As a result, the traffic could be read by an attacker intercepting the network traffic. Use an SSLSocket created by 'SSLSocketFactory' or 'SSLServerSocketFactory' instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.xmlinputfactory-possible-xxe.xmlinputfactory-possible-xxe",
+      "path": "tika-core/src/main/java/org/apache/tika/utils/XMLReaderUtils.java",
+      "start": {
+        "line": 307,
+        "col": 35,
+        "offset": 12721
+      },
+      "end": {
+        "line": 307,
+        "col": 63,
+        "offset": 12749
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "XML external entities are not explicitly disabled for this XMLInputFactory. This could be vulnerable to XML external entity vulnerabilities. Explicitly disable external entities by setting \"javax.xml.stream.isSupportingExternalEntities\" to false.",
+      "lines": "requires login"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,186 @@
+{
+  "version": "1.185.0",
+  "results": [
+    {
+      "check_id": "java.lang.security.audit.overly-permissive-file-permission.overly-permissive-file-permission",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TemporaryResources.java",
+      "start": {
+        "line": 97,
+        "col": 13,
+        "offset": 3814
+      },
+      "end": {
+        "line": 97,
+        "col": 95,
+        "offset": 3896
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-276: Incorrect Default Permissions"
+      ],
+      "message": "Detected file permissions that are overly permissive (read, write, and execute). It is generally a bad practices to set overly permissive file permission such as read+write+exec for all users. If the file affected is a configuration, a binary, a script or sensitive data, it can lead to privilege escalation or information leakage. Instead, follow the principle of least privilege and give users only the  permissions they need.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 221,
+        "col": 13,
+        "offset": 8527
+      },
+      "end": {
+        "line": 223,
+        "col": 14,
+        "offset": 8637
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 225,
+        "col": 13,
+        "offset": 8651
+      },
+      "end": {
+        "line": 227,
+        "col": 14,
+        "offset": 8761
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.ssl.insecure-trust-manager.insecure-trust-manager",
+      "path": "tika-core/src/main/java/org/apache/tika/io/TikaInputStream.java",
+      "start": {
+        "line": 229,
+        "col": 13,
+        "offset": 8775
+      },
+      "end": {
+        "line": 232,
+        "col": 14,
+        "offset": 8887
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-295: Improper Certificate Validation"
+      ],
+      "message": "Detected empty trust manager implementations. This is dangerous because it accepts any certificate, enabling man-in-the-middle attacks. Consider using a KeyStore and TrustManagerFactory instead. See https://stackoverflow.com/questions/2642777/trusting-all-certificates-using-httpclient-over-https for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-aes-ecb.use-of-aes-ecb",
+      "path": "tika-core/src/main/java/org/apache/tika/parser/CryptoParser.java",
+      "start": {
+        "line": 83,
+        "col": 26,
+        "offset": 3201
+      },
+      "end": {
+        "line": 83,
+        "col": 68,
+        "offset": 3243
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+      ],
+      "message": "Use of AES with ECB mode detected. ECB doesn't provide message confidentiality and  is not semantically secure so should not be used. Instead, use a strong, secure cipher: Cipher.getInstance(\"AES/CBC/PKCS7PADDING\"). See https://owasp.org/www-community/Using_the_Java_Cryptographic_Extensions for more information.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.xxe.saxparserfactory-disallow-doctype-decl-missing.saxparserfactory-disallow-doctype-decl-missing",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module/src/main/java/org/apache/tika/parser/microsoft/ooxml/XSSFCommentsShim.java",
+      "start": {
+        "line": 89,
+        "col": 17,
+        "offset": 3285
+      },
+      "end": {
+        "line": 89,
+        "col": 59,
+        "offset": 3327
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-611: Improper Restriction of XML External Entity Reference"
+      ],
+      "message": "DOCTYPE declarations are enabled for this SAXParserFactory. This is vulnerable to XML external entity attacks. Disable this by setting the feature `http://apache.org/xml/features/disallow-doctype-decl` to true. Alternatively, allow DOCTYPE declarations and only prohibit external entities declarations. This can be done by setting the features `http://xml.org/sax/features/external-general-entities` and `http://xml.org/sax/features/external-parameter-entities` to false. NOTE - The previous links are not meant to be clicked. They are the literal config key values that are supposed to be used to disable these features. For more information, see https://semgrep.dev/docs/cheat-sheets/java-xxe/#3a-documentbuilderfactory.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.command-injection-formatted-runtime-call.command-injection-formatted-runtime-call",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module/src/main/java/org/apache/tika/parser/ocr/TesseractOCRParser.java",
+      "start": {
+        "line": 736,
+        "col": 23,
+        "offset": 31648
+      },
+      "end": {
+        "line": 736,
+        "col": 93,
+        "offset": 31718
+      },
+      "severity": "ERROR",
+      "cwe": [
+        "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+      ],
+      "message": "A formatted or concatenated string was detected as input to a java.lang.Runtime call. This is dangerous if a variable is controlled by user input and could result in a command injection. Ensure your variables are not controlled by users or sufficiently sanitized.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.crypto.use-of-md5.use-of-md5",
+      "path": "tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module/src/main/java/org/apache/tika/parser/pdf/PDFParser.java",
+      "start": {
+        "line": 611,
+        "col": 58,
+        "offset": 26756
+      },
+      "end": {
+        "line": 611,
+        "col": 63,
+        "offset": 26761
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-328: Use of Weak Hash"
+      ],
+      "message": "Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is therefore not suitable as a cryptographic signature. Use HMAC instead.",
+      "lines": "requires login"
+    },
+    {
+      "check_id": "java.lang.security.audit.object-deserialization.object-deserialization",
+      "path": "tika-serialization/src/main/java/org/apache/tika/serialization/JsonMetadataList.java",
+      "start": {
+        "line": 156,
+        "col": 9,
+        "offset": 6193
+      },
+      "end": {
+        "line": 156,
+        "col": 63,
+        "offset": 6247
+      },
+      "severity": "WARNING",
+      "cwe": [
+        "CWE-502: Deserialization of Untrusted Data"
+      ],
+      "message": "Found object deserialization using ObjectInputStream. Deserializing entire Java objects is dangerous because malicious actors can create Java object streams with unintended consequences. Ensure that the objects being deserialized are not user-controlled. If this must be done, consider using HMACs to sign the data stream to make sure it is not tampered with, or consider only transmitting object fields and populating a new object.",
+      "lines": "requires login"
+    }
+  ],
+  "errors": []
+}
