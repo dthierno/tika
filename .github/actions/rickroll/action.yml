@@ -1,0 +1,54 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# IFT3913 - Tâche 3 : action composite réutilisable qui rickrolle l'équipe
+# lorsqu'un cas de test échoue. Elle lit les rapports Surefire pour nommer
+# les tests qui « vous ont laissé tomber ».
+#
+# Utilisation dans ce dépôt :   uses: ./.github/actions/rickroll
+# Depuis un autre dépôt :       uses: dthierno/tika/.github/actions/rickroll@main
+
+name: 'Never Gonna Fail You Up'
+description: 'Rickrolle le CI quand un cas de test échoue'
+branding:
+  icon: 'music'
+  color: 'red'
+
+inputs:
+  reports:
+    description: 'Motif glob des rapports Surefire/Failsafe (XML JUnit)'
+    required: false
+    default: '**/target/surefire-reports/TEST-*.xml'
+  video-url:
+    description: 'URL de la vidéo'
+    required: false
+    default: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
+
+outputs:
+  failed-tests:
+    description: 'Nombre de cas de test en échec trouvés dans les rapports'
+    value: ${{ steps.rickroll.outputs.failed-tests }}
+
+runs:
+  using: 'composite'
+  steps:
+    - id: rickroll
+      shell: bash
+      env:
+        REPORTS_GLOB: ${{ inputs.reports }}
+        VIDEO_URL: ${{ inputs.video-url }}
+      run: python3 "$GITHUB_ACTION_PATH/rickroll.py"

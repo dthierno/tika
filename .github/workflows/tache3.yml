@@ -1,0 +1,179 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# IFT3913 - Tâche 3
+#  - job "semgrep" : fait échouer le build si un commit introduit une NOUVELLE
+#    vulnérabilité détectée par Semgrep (analyse différentielle avec --baseline-commit)
+#  - job "tests"   : exécute la suite de tests des modules du cas d'étude et
+#    rickrolle l'équipe si un cas de test échoue
+
+name: IFT3913 - Tâche 3
+
+on:
+  push:
+    branches: [ main, 'tache3/**' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      rickroll_demo:
+        description: 'Faire échouer volontairement RickrollDemoTest pour démontrer le rickroll'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tache3-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SEMGREP_VERSION: '1.185.0'
+  SEMGREP_RULES: '--config p/java --config p/security-audit'
+  CASE_STUDY_MODULES: >-
+    tika-core,tika-serialization,tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-pdf-module,tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-ocr-module,tika-parsers/tika-parsers-standard/tika-parsers-standard-modules/tika-parser-microsoft-module
+
+jobs:
+  semgrep:
+    name: Semgrep - nouvelles vulnérabilités
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # tout l'historique est nécessaire pour que Semgrep puisse
+          # extraire le commit de référence
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Installer Semgrep ${{ env.SEMGREP_VERSION }}
+        run: pip install "semgrep==${SEMGREP_VERSION}"
+
+      - name: Déterminer le commit de référence
+        id: baseline
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          set -euo pipefail
+          case "$EVENT_NAME" in
+            pull_request)
+              # tout ce que la PR ajoute par rapport à la branche cible
+              base=$(git merge-base "$PR_BASE_SHA" HEAD) ;;
+            push)
+              # tout ce que le push ajoute par rapport à l'état précédent de la branche
+              base="$PUSH_BEFORE_SHA" ;;
+            *)
+              base="" ;;
+          esac
+          # nouvelle branche (before = 000…0), force-push ou déclenchement manuel :
+          # on compare au parent du commit courant
+          if [ -z "$base" ] || ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+            base=$(git rev-parse HEAD~1)
+          fi
+          echo "Commit de référence : $base"
+          echo "sha=$base" >> "$GITHUB_OUTPUT"
+
+      # les rapports sont écrits hors du dépôt : --baseline-commit exige un arbre de travail propre
+      - name: Rapport complet (informatif, ne bloque pas)
+        run: |
+          semgrep scan $SEMGREP_RULES --metrics=off --quiet \
+            --json-output="$RUNNER_TEMP/semgrep-full.json" --sarif-output="$RUNNER_TEMP/semgrep-full.sarif" > /dev/null
+
+      - name: Analyse différentielle (bloque si nouvelle vulnérabilité)
+        id: diff
+        env:
+          BASELINE_SHA: ${{ steps.baseline.outputs.sha }}
+        run: |
+          semgrep scan $SEMGREP_RULES --metrics=off \
+            --baseline-commit "$BASELINE_SHA" \
+            --error \
+            --json-output="$RUNNER_TEMP/semgrep-new.json"
+
+      - name: Résumé Semgrep
+        if: always() && steps.baseline.outcome == 'success'
+        env:
+          BASELINE_SHA: ${{ steps.baseline.outputs.sha }}
+        run: |
+          cd "$RUNNER_TEMP"
+          {
+            echo "## Semgrep"
+            echo
+            echo "Commit de référence : \`$BASELINE_SHA\`"
+            echo
+            if [ -f semgrep-full.json ]; then
+              echo "Constats dans tout le dépôt (informatif) : **$(jq '.results | length' semgrep-full.json)**"
+              echo
+            fi
+            if [ -f semgrep-new.json ]; then
+              new=$(jq '.results | length' semgrep-new.json)
+              echo "Constats **introduits** depuis le commit de référence : **$new**"
+              if [ "$new" -gt 0 ]; then
+                echo
+                echo "| Règle | Sévérité | Fichier | Ligne |"
+                echo "|---|---|---|---|"
+                jq -r '.results[] | "| `\(.check_id | split(".") | last)` | \(.extra.severity) | `\(.path)` | \(.start.line) |"' semgrep-new.json
+              fi
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Archiver les rapports Semgrep
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-reports
+          path: ${{ runner.temp }}/semgrep-*.*
+          if-no-files-found: ignore
+
+  tests:
+    name: Tests du cas d'étude (+ rickroll)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+
+      - name: Compiler les dépendances (sans tests)
+        run: >-
+          ./mvnw -B -ntp -pl "$CASE_STUDY_MODULES" -am install
+          -DskipTests -Dspotless.goal=check
+
+      - name: Exécuter les tests du cas d'étude
+        id: tests
+        env:
+          RICKROLL_DEMO: ${{ inputs.rickroll_demo == true }}
+        run: >-
+          ./mvnw -B -ntp -pl "$CASE_STUDY_MODULES" test
+          -Dspotless.goal=check -Djacoco.skip=true
+          -Dtika.rickroll.demo="$RICKROLL_DEMO"
+
+      - name: Never gonna let you down
+        if: failure() && steps.tests.outcome == 'failure'
+        uses: ./.github/actions/rickroll
